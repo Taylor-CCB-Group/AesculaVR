@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// A compound action is an action that consists of multiple actions, that will be treated as a single action by the action manager.
 /// </summary>
-public class CompoundAction : IAction
+public class CompoundAction : IActionDereferenceable
 {
 
     private IAction[] actions;
@@ -52,5 +52,13 @@ public class CompoundAction : IAction
         }
     }
 
-
+    public void OnDereferenced()
+    {
+        int count = actions.Length;
+        for (int i = count - 1; i >= 0; i--)
+        {
+            if (actions[i] is IActionDereferenceable)
+                ((IActionDereferenceable)actions[i]).OnDereferenced();
+        }
+    }
 }

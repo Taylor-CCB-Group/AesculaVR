@@ -23,6 +23,17 @@ public class ActionManager : ObservableObject
         this.futureActions = new List<IAction>();
     }
 
+    private void ClearFutureActions()
+    {
+        for(int i = 0; i < futureActions.Count; i++)
+        {
+            if (futureActions[i] is IActionDereferenceable)
+                ((IActionDereferenceable)futureActions[i]).OnDereferenced();
+        }
+
+        this.futureActions.Clear();
+    }
+
     /// <summary>
     /// Do a new Action
     /// </summary>
@@ -36,7 +47,7 @@ public class ActionManager : ObservableObject
         pastActions.Add(action);
 
         if (CanRedo())
-            this.futureActions.Clear();
+            ClearFutureActions();
 
         NotifyObservers();
     }

@@ -93,7 +93,38 @@ namespace Tests
 
         }
 
+        private class CreatePrimitiveObjectAction : IActionDereferenceable
+        {
 
+            private GameObject created;
+            public GameObject Created { get { return created; } }
+
+            public CreatePrimitiveObjectAction()
+            {
+                created = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+                created.SetActive(false);
+            }
+
+            public string Description()
+            {
+                return "";
+            }
+
+            public void DoAction()
+            {
+                created.SetActive(true);
+            }
+
+            public void OnDereferenced()
+            {
+                GameObject.Destroy(created);
+            }
+
+            public void UndoAction()
+            {
+                created.SetActive(false);
+            }
+        }
 
         private class TestObserver : IObserver
         {
@@ -518,6 +549,50 @@ namespace Tests
 
             Assert.That(compound.Count == 4, "The value was [" + testObject.Value + "] but is should be 65");
         }
+        #endregion
+
+        #region Dereferenceable Action Tests
+
+        [UnityTest]
+        public IEnumerator DereferenceableAction_ObjectDestroyedOnDereferenced()
+        {
+            ActionManager actionManager = new ActionManager();
+            CreatePrimitiveObjectAction action = new CreatePrimitiveObjectAction();
+
+            TestObject testObject = new TestObject(5);
+            TestAction actionA = new TestAction(testObject, 1);
+
+            actionManager.DoAction(action);
+            actionManager.UndoAction();
+            actionManager.DoAction(actionA);
+
+            yield return 1;
+
+            Assert.That(action.Created == null);
+
+        }
+
+
+        [UnityTest]
+        public IEnumerator DereferenceableAction_NotDereferencedOnUndoRedo()
+        {
+            ActionManager actionManager = new ActionManager();
+            CreatePrimitiveObjectAction action = new CreatePrimitiveObjectAction();
+
+            TestObject testObject = new TestObject(5);
+            TestAction actionA = new TestAction(testObject, 1);
+
+            actionManager.DoAction(action);
+            actionManager.UndoAction();
+            actionManager.RedoAction();
+            actionManager.DoAction(actionA);
+
+            yield return 1;
+
+            Assert.That(action.Created != null);
+
+        }
+
         #endregion
     }
 }
