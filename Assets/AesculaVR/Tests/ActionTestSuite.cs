@@ -37,6 +37,34 @@ namespace Tests
             }
         }
 
+        private class MultiplyAction : IAction
+        {
+            private TestObject testObject;
+            private int value;
+
+            public MultiplyAction(TestObject testObject, int value)
+            {
+                this.testObject = testObject;
+                this.value = value;
+            }
+
+            public string Description()
+            {
+                return "multiply value by " + value.ToString();
+            }
+
+            public void DoAction()
+            {
+                testObject.Multiply(value);
+            }
+
+            public void UndoAction()
+            {
+                testObject.Divide(value);
+            }
+        }
+
+
         private class TestObject
         {
 
@@ -53,8 +81,19 @@ namespace Tests
                 this.value += amount;
             }
 
+            public void Multiply(int amount)
+            {
+                this.value *= amount;
+            }
+
+            public void Divide(int amount)
+            {
+                this.value /= amount;
+            }
 
         }
+
+
 
         private class TestObserver : IObserver
         {
@@ -398,9 +437,87 @@ namespace Tests
             Assert.That(observer.Count == 1, "We should observered only 1 action");
         }
 
-        
+
 
         #endregion
 
+        #region Compound Action Tests
+        
+        [Test]
+        public  void CompoundAction_DoAction()
+        {
+            ActionManager actionManager = new ActionManager();
+            TestObject testObject = new TestObject(5);
+
+            TestAction      actionA = new TestAction(testObject, 1);
+            TestAction      actionB = new TestAction(testObject, 4);
+            MultiplyAction  actionC = new MultiplyAction(testObject, 6);
+            TestAction actionD = new TestAction(testObject, 5);
+
+            CompoundAction compound = new CompoundAction(new IAction[]{ actionA , actionB, actionC, actionD });
+
+
+            actionManager.DoAction(compound);
+
+            Assert.That(testObject.Value == 65, "The value was ["+ testObject.Value + "] but is should be 65");
+        }
+
+        [Test]
+        public void CompoundAction_UndoAction()
+        {
+            ActionManager actionManager = new ActionManager();
+            TestObject testObject = new TestObject(5);
+
+            TestAction actionA = new TestAction(testObject, 1);
+            TestAction actionB = new TestAction(testObject, 4);
+            MultiplyAction actionC = new MultiplyAction(testObject, 6);
+            TestAction actionD = new TestAction(testObject, 5);
+
+            CompoundAction compound = new CompoundAction(new IAction[] { actionA, actionB, actionC, actionD });
+            
+
+            actionManager.DoAction(compound);
+            actionManager.UndoAction();
+            
+            Assert.That(testObject.Value == 5, "The value was [" + testObject.Value + "] but is should be 5");
+        }
+
+        [Test]
+        public void CompoundAction_RedoAction()
+        {
+            ActionManager actionManager = new ActionManager();
+            TestObject testObject = new TestObject(5);
+
+            TestAction actionA = new TestAction(testObject, 1);
+            TestAction actionB = new TestAction(testObject, 4);
+            MultiplyAction actionC = new MultiplyAction(testObject, 6);
+            TestAction actionD = new TestAction(testObject, 5);
+
+            CompoundAction compound = new CompoundAction(new IAction[] { actionA, actionB, actionC, actionD });
+
+
+            actionManager.DoAction(compound);
+            actionManager.UndoAction();
+            actionManager.RedoAction();
+
+            Assert.That(testObject.Value == 65, "The value was [" + testObject.Value + "] but is should be 65");
+        }
+
+        [Test]
+        public void CompoundAction_Count()
+        {
+            ActionManager actionManager = new ActionManager();
+            TestObject testObject = new TestObject(5);
+
+            TestAction actionA = new TestAction(testObject, 1);
+            TestAction actionB = new TestAction(testObject, 4);
+            MultiplyAction actionC = new MultiplyAction(testObject, 6);
+            TestAction actionD = new TestAction(testObject, 5);
+
+            CompoundAction compound = new CompoundAction(new IAction[] { actionA, actionB, actionC, actionD });
+
+            Assert.That(compound.Count == 4, "The value was [" + testObject.Value + "] but is should be 65");
+        }
+        #endregion
     }
 }
