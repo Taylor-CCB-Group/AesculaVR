@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
@@ -53,6 +54,22 @@ namespace Tests
             }
 
 
+        }
+
+        private class TestObserver : IObserver
+        {
+            private int count;
+            public int Count { get { return count; } }
+
+            public void Notify(object Sender, EventArgs args)
+            {
+                count++;
+            }
+
+            public TestObserver()
+            {
+                this.count = 0;
+            }
         }
 
         #region Counts
@@ -331,5 +348,59 @@ namespace Tests
         }
 
         #endregion
+
+        #region Observer
+
+        [Test]
+        public void ObserverDoAction()
+        {
+            ActionManager actionManager = new ActionManager();
+            TestObject testObject = new TestObject(8);
+            TestAction action = new TestAction(testObject, 2);
+            TestObserver observer = new TestObserver();
+
+            actionManager.AddObserver(observer);
+            actionManager.DoAction(action);
+
+            Assert.That(observer.Count == 1, "We should observered only 1 action");
+
+        }
+
+        [Test]
+        public void ObserveUndo()
+        {
+            ActionManager actionManager = new ActionManager();
+            TestObject testObject = new TestObject(8);
+            TestAction action = new TestAction(testObject, 2);
+            TestObserver observer = new TestObserver();
+
+            actionManager.DoAction(action);
+
+            actionManager.AddObserver(observer);
+            actionManager.UndoAction();
+            Assert.That(observer.Count == 1, "We should observered only 1 action");
+        }
+
+        [Test]
+        public void ObserverRedo()
+        {
+            ActionManager actionManager = new ActionManager();
+            TestObject testObject = new TestObject(8);
+            TestAction action = new TestAction(testObject, 2);
+            TestObserver observer = new TestObserver();
+
+            actionManager.DoAction(action);
+            actionManager.UndoAction();
+
+            actionManager.AddObserver(observer);
+            actionManager.RedoAction();
+
+            Assert.That(observer.Count == 1, "We should observered only 1 action");
+        }
+
+        
+
+        #endregion
+
     }
 }

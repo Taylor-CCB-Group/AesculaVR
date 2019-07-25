@@ -37,6 +37,8 @@ public class ActionManager : ObservableObject
 
         if (CanRedo())
             this.futureActions.Clear();
+
+        NotifyObservers();
     }
 
     /// <summary>
@@ -50,6 +52,8 @@ public class ActionManager : ObservableObject
         pastActions.RemoveAt(pastActions.Count - 1);
         action.UndoAction();
         futureActions.Add(action);
+
+        NotifyObservers();
     }
 
     /// <summary>
@@ -65,8 +69,9 @@ public class ActionManager : ObservableObject
         action.DoAction();
         pastActions.Add(action);
 
+        NotifyObservers();
     }
-    
+
     /// <summary>
     /// is there an action to undo?
     /// </summary>
