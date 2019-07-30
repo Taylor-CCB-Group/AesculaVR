@@ -1,0 +1,6 @@
+For more details, I'm following the UML from:
+https://refactoring.guru/design-patterns/memento.
+
+--
+
+Instead of using it for Undo Redo as suggested, we using it for saving and loading data between sessions
