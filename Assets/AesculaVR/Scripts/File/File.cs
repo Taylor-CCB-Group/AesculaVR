@@ -4,6 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// A class that implements the interface IFile.
+/// </summary>
 public class File : IFile
 {
 
@@ -13,6 +17,10 @@ public class File : IFile
     
     private string path;
 
+    /// <summary>
+    /// The constructor for creating a file
+    /// </summary>
+    /// <param name="path">The path to the file we want to create.</param>
     public File(string path)
     {
         if (!System.IO.File.Exists(path))
@@ -29,7 +37,7 @@ public class File : IFile
     public DateTime Accessed() => accessed;
 
     public DateTime Created() => created;
-
+       
     public DateTime Modified() => modified;
 
 
@@ -48,4 +56,7 @@ public class File : IFile
         else
             return System.IO.Path.GetDirectoryName(this.Path(true));
     }
+
+    public string Extension() => System.IO.Path.GetExtension(path);
+
 }

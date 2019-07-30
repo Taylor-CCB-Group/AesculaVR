@@ -22,6 +22,12 @@ public interface IFile
     /// <param name="withName">Do we want the filename (with extension) included?</param>
     /// <returns>the absolute path of the file.</returns>
     string Path(bool withName = true);
+
+    /// <summary>
+    /// The file's extension, e.g. ".txt"
+    /// </summary>
+    /// <returns>The files extension</returns>
+    string Extension();
     
 
     /// <summary>
