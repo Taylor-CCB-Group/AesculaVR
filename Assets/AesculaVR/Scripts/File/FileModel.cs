@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// A way to track files in a directory.
 /// </summary>
-public class FileModel : ObservableObject
+public class FileModel : ObservableObject, IFileSortable
 {
 
     #region private variables
@@ -14,7 +14,7 @@ public class FileModel : ObservableObject
     private readonly string extension = "";
     
     private FileSorter.SortDirection sortDirection;
-    private FileSorter.SortField sortField;
+    private FileSorter.SortBy sortField;
 
     private List<IFile> files;
 
@@ -29,22 +29,17 @@ public class FileModel : ObservableObject
     /// </summary>
     public string Extension { get { return extension; } }
 
-    /// <summary>
-    /// The Direction the files will be return in.
-    /// </summary>
-    public FileSorter.SortDirection SortDirection
-    {
-        get { return this.sortDirection; }
-        set { this.sortDirection = value; Refresh(); }
-    }
-    /// <summary>
-    /// The field we sort bu.
-    /// </summary>
-    public FileSorter.SortField SortField
-    {
-        get { return this.sortField; }
-        set { this.sortField = value; Refresh(); }
-    }
+    #region IFileSortable
+
+    public void SetSortBy(FileSorter.SortBy value) { this.sortField = value; Refresh(); }
+
+    public void SetSortDirection(FileSorter.SortDirection value) { this.sortDirection = value; Refresh(); }
+
+    public FileSorter.SortBy GetSortBy() => this.sortField;
+
+    public FileSorter.SortDirection GetSortDirection() => this.sortDirection;
+
+    #endregion
 
     /// <summary>
     /// A copy of the files in this model.
@@ -64,7 +59,6 @@ public class FileModel : ObservableObject
         NotifyObservers();  
     }
 
-
     /// <summary>
     /// This model will track all files in the directory
     /// </summary>
@@ -74,7 +68,7 @@ public class FileModel : ObservableObject
         this.directory = directory;
         this.extension = string.Empty;
 
-        sortField = FileSorter.SortField.Created;
+        sortField = FileSorter.SortBy.Created;
         sortDirection = FileSorter.SortDirection.Descending;
 
         Refresh();
@@ -86,7 +80,7 @@ public class FileModel : ObservableObject
     /// <param name="directory"> The directory we want to look at</param>
     /// <param name="sortField"> The field we want to sort by.</param>
     /// <param name="sortDirection"> The direction we want to sort by. </param>
-    public FileModel(string directory, FileSorter.SortField sortField, FileSorter.SortDirection sortDirection) : base()
+    public FileModel(string directory, FileSorter.SortBy sortField, FileSorter.SortDirection sortDirection) : base()
     {
         this.directory = directory;
         this.extension = string.Empty;
@@ -107,7 +101,7 @@ public class FileModel : ObservableObject
         this.directory = directory;
         this.extension = extension;
 
-        sortField     = FileSorter.SortField.Created;
+        sortField     = FileSorter.SortBy.Created;
         sortDirection = FileSorter.SortDirection.Descending;
 
         Refresh();
@@ -120,7 +114,7 @@ public class FileModel : ObservableObject
     /// <param name="extension">The extension we want to track.</param>
     /// <param name="sortField">The field we want to sort by</param>
     /// <param name="sortDirection">the sort direction</param>
-    public FileModel(string directory, string extension, FileSorter.SortField sortField, FileSorter.SortDirection sortDirection) : base()
+    public FileModel(string directory, string extension, FileSorter.SortBy sortField, FileSorter.SortDirection sortDirection) : base()
     {
         this.directory = directory;
         this.extension = extension;

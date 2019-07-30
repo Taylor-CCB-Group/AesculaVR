@@ -11,7 +11,7 @@ public static class FileSorter
     /// <summary>
     /// The selection of fields we can sort IFiles by.
     /// </summary>
-    public enum SortField { Name, Created, Accessed, Modified }
+    public enum SortBy { Name, Created, Accessed, Modified }
 
     /// <summary>
     /// The Directions we can sort in.
@@ -25,22 +25,22 @@ public static class FileSorter
     /// <param name="sortBy"> the field we want to sort by.</param>
     /// <param name="sortDirection">the direction of the sort.</param>
     /// <returns></returns>
-    public static List<IFile> SortFiles(List<IFile> files, SortField sortBy, SortDirection sortDirection)
+    public static List<IFile> SortFiles(List<IFile> files, SortBy sortBy, SortDirection sortDirection)
     {
         List<IFile> sorted;
 
         switch (sortBy)
         {
-            case SortField.Name:
+            case SortBy.Name:
                 sorted = files.OrderBy(file => file.Name()).ToList();
                 break;
-            case SortField.Modified:
+            case SortBy.Modified:
                 sorted = files.OrderBy(file => file.Modified()).ToList();
                 break;
-            case SortField.Created:
+            case SortBy.Created:
                 sorted = files.OrderBy(file => file.Created()).ToList();
                 break;
-            case SortField.Accessed:
+            case SortBy.Accessed:
                 sorted = files.OrderBy(file => file.Accessed()).ToList();
                 break;
             default:
