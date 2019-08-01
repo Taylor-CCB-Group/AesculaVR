@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Dummiesman;
 
 public class ObjectFileManager : FileManager
 {
@@ -14,4 +15,7 @@ public class ObjectFileManager : FileManager
     {
 
     }
+
+
+
 }

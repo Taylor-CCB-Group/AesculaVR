@@ -51,6 +51,6 @@ public abstract class FileManager : ObservableObject, IObserver, IFileSortable
 
     public void Notify(object Sender, EventArgs args)
     {
-        this.NotifyObservers();
+        this.NotifyObservers(Sender, args);
     }
 }
