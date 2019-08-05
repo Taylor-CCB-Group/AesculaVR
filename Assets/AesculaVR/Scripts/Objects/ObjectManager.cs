@@ -111,6 +111,8 @@ public class ObjectManager : ObservableObject,IObserver
     {
         this.fileManager = new ObjectFileManager();
         this.fileManager.AddObserver(this);
+
+        this.activeObjects = new HashSet<GeneratedObject>();
     }
 
     /// <summary>

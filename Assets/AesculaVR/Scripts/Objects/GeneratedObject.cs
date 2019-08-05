@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// An Object that was created from an .Obj file.
+/// </summary>
 public class GeneratedObject : MonoBehaviour
 {
     private IFile orginalFile;

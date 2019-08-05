@@ -11,7 +11,7 @@ public static class FileSorter
     /// <summary>
     /// The selection of fields we can sort IFiles by.
     /// </summary>
-    public enum SortBy { Name, Created, Accessed, Modified }
+    public enum SortBy { Name = 0, Created = 1, Accessed = 2, Modified = 3 }
 
     /// <summary>
     /// The Directions we can sort in.

@@ -1,0 +1,46 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using   TMPro;
+
+/// <summary>
+/// A drop down UI element for setting a sort direction
+/// </summary>
+[RequireComponent(typeof(TMP_Dropdown))]
+public class OrderByDropdown : ObservableComponent
+{
+    private TMP_Dropdown dropdown;
+
+    private const string SelectedText = "Order by : ";
+
+    private List<TMP_Dropdown.OptionData> options;
+    private List<string> optionsText = new List<string>(new string[] { "Ascending", "Descending" });
+
+    public FileSorter.SortDirection Value()
+    {
+        return (FileSorter.SortDirection)dropdown.value;
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        options = new List<TMP_Dropdown.OptionData>();
+        options.Add(new TMP_Dropdown.OptionData(optionsText[0]));
+        options.Add(new TMP_Dropdown.OptionData(optionsText[1]));
+   
+        this.dropdown = GetComponent<TMP_Dropdown>();
+        this.dropdown.ClearOptions();
+        this.dropdown.AddOptions(options);
+        
+        OnValueChanged(this.dropdown.value);
+
+        this.dropdown.onValueChanged.AddListener(OnValueChanged);
+    }
+
+    private void OnValueChanged(int value)
+    {
+        this.dropdown.captionText.SetText(SelectedText + optionsText[value]);
+        NotifyObservers();
+    }
+}

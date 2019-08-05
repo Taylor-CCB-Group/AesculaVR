@@ -13,7 +13,7 @@ public class ObjectFileManager : FileManager
         ".Obj"
         )
     {
-
+        Debug.Log(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"/AesculaVR/Objects");
     }
 
 

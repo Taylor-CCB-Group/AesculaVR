@@ -32,7 +32,7 @@ public static class FileLoader
     /// <returns>A new list filled with File objects.</returns>
     public static List<IFile> GetFiles(string directory, string extension)
     {
-        if (directory != string.Empty)
+        if (directory == string.Empty)
             throw new System.IO.FileLoadException("Unable to load files from an empty directory");
 
         if(!System.IO.Directory.Exists(directory))
@@ -44,7 +44,7 @@ public static class FileLoader
         for (int i = 0; i < paths.Length; i++)
         {
             if((extension != string.Empty) && DoesPathExtensionMatch(paths[i], extension))
-                files[i] = new File(paths[i]);
+                files.Add(new File(paths[i]));
         }
 
         return files;
