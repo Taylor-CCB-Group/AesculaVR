@@ -4,8 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectManager : ObservableObject,IObserver
+public class ObjectManager : ObservableObject, IObserver
 {
+
+    private static  Vector3 GeneratedObjectScale { get { return Vector3.one * 0.1f; } }
 
     #region Object Manager Actions
     /// <summary>
@@ -27,8 +29,18 @@ public class ObjectManager : ObservableObject,IObserver
         {
             GameObject gameObject = new OBJLoader().Load(file.Path());
             GeneratedObject generatedObject = gameObject.AddComponent<GeneratedObject>();
+            Manipulatable manipulatable = gameObject.AddComponent<Manipulatable>();
+            BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
+
+            Vector3 boxSize = gameObject.GetComponentInChildren<MeshRenderer>().bounds.size;
+            boxCollider.size = boxSize;
+            boxSize.x = 0; boxSize.z = 0;
+            boxCollider.center = boxSize / 3;
+
             generatedObject.Setup(file);
-            
+
+
+            gameObject.transform.localScale = GeneratedObjectScale;
             return generatedObject;
         }
 

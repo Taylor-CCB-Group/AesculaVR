@@ -53,11 +53,13 @@ public class FileObjectView : MonoBehaviour, IPoolable
     void IPoolable.OnPoppedFromPool()
     {
         this.gameObject.SetActive(true);
+        this.gameObject.hideFlags = HideFlags.None;
     }
 
     void IPoolable.OnPushedToPool()
     {
         this.gameObject.SetActive(false);
+        this.gameObject.hideFlags = HideFlags.HideInHierarchy;
 
         this.fname   .SetText(errorStr);
         this.created .SetText(errorStr);

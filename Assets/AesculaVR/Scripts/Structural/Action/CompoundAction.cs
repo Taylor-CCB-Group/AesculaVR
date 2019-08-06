@@ -29,7 +29,18 @@ public class CompoundAction : IActionDereferenceable
     {
         this.actions = actions;
         this.description = "A coumpound action consisting of " + actions.Length + " actions";
+    }
 
+    public CompoundAction(IAction[] actions, string description)
+    {
+        this.actions = actions;
+        this.description = description;
+    }
+
+    public CompoundAction(List<IAction> actions, string description)
+    {
+        this.actions = actions.ToArray();
+        this.description = description;
     }
 
     public string Description() => description;
