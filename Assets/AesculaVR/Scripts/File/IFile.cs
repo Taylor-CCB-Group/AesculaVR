@@ -45,4 +45,9 @@ public interface IFile
     /// </summary>
     /// <returns>The DateTime for when the file was last accessed</returns>
     DateTime Accessed();
+
+
+    void SetLastAccessTime(DateTime dateTime);
+    void SetLastAccessTime();
+
 }

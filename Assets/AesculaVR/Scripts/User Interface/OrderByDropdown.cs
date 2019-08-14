@@ -21,9 +21,8 @@ public class OrderByDropdown : ObservableComponent
         return (FileSorter.SortDirection)dropdown.value;
     }
 
-    protected override void Awake()
+    protected void Awake()
     {
-        base.Awake();
 
         options = new List<TMP_Dropdown.OptionData>();
         options.Add(new TMP_Dropdown.OptionData(optionsText[0]));

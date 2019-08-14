@@ -38,7 +38,7 @@ public static class FileLoader
         if(!System.IO.Directory.Exists(directory))
             throw new System.IO.FileLoadException("Unable to load files from a directory that does not exist.");
 
-        string[] paths = System.IO.Directory.GetFiles(directory);
+        string[] paths = System.IO.Directory.GetFiles(directory,"*"+ extension);
         List<IFile> files = new List<IFile>(paths.Length + 1);
 
         for (int i = 0; i < paths.Length; i++)

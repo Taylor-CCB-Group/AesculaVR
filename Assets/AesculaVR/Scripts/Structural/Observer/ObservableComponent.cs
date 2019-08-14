@@ -6,15 +6,9 @@ using UnityEngine;
 public abstract class ObservableComponent : MonoBehaviour, IObservable
 {
 
-    private List<IObserver> observersList;
-    private HashSet<IObserver> observersHash;
+    private List<IObserver> observersList    = new List<IObserver>();
+    private HashSet<IObserver> observersHash = new HashSet<IObserver>();
 
-    protected virtual void Awake()
-    {
-        this.observersList = new List<IObserver>();
-        this.observersHash = new HashSet<IObserver>();
-    }
-    
     public void NotifyObservers() => NotifyObservers(null);
 
     public void NotifyObservers(EventArgs args)

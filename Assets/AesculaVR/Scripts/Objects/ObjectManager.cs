@@ -13,7 +13,7 @@ public class ObjectManager : ObservableObject, IObserver
     /// <summary>
     /// This Action generates an object from an File
     /// </summary>
-    private class GenerateObjectAction : IActionDereferenceable
+    public class GenerateObjectAction : IActionDereferenceable
     {
 
         private readonly ObjectManager objectManager;
@@ -38,7 +38,11 @@ public class ObjectManager : ObservableObject, IObserver
             boxCollider.center = boxSize / 3;
 
             generatedObject.Setup(file);
+            generatedObject.transform.SetParent(MasterManager.GetManager().TrackerManager.Main?.transform);
 
+            file.SetLastAccessTime();
+            
+            
 
             gameObject.transform.localScale = GeneratedObjectScale;
             return generatedObject;
@@ -61,6 +65,7 @@ public class ObjectManager : ObservableObject, IObserver
 
         public void DoAction()
         {
+            Debug.Log("GenerateObjectAction : DoAction");
             generatedObject.gameObject.SetActive(true);
             objectManager.activeObjects.Add(generatedObject);
         }
@@ -72,6 +77,7 @@ public class ObjectManager : ObservableObject, IObserver
 
         public void UndoAction()
         {
+            Debug.Log("GenerateObjectAction : UndoAction");
             generatedObject.gameObject.SetActive(false);
             objectManager.activeObjects.Remove(generatedObject);
         }
@@ -114,8 +120,11 @@ public class ObjectManager : ObservableObject, IObserver
     #endregion
 
     private readonly ObjectFileManager fileManager;
-    private readonly HashSet<GeneratedObject> activeObjects;
+    private readonly List<GeneratedObject> activeObjects;
        
+    public List<GeneratedObject> GeneratedObjects { get { return new List<GeneratedObject> (activeObjects); } }
+    public List<GeneratedObject> GeneratedObjectsReference { get { return activeObjects; } }
+
     public FileManager FileManager { get { return fileManager; } }
 
 
@@ -124,7 +133,7 @@ public class ObjectManager : ObservableObject, IObserver
         this.fileManager = new ObjectFileManager();
         this.fileManager.AddObserver(this);
 
-        this.activeObjects = new HashSet<GeneratedObject>();
+        this.activeObjects = new List<GeneratedObject>();
     }
 
     /// <summary>

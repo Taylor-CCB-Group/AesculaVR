@@ -59,4 +59,11 @@ public class File : IFile
 
     public string Extension() => System.IO.Path.GetExtension(path);
 
+    public void SetLastAccessTime(DateTime dateTime)
+    {
+        System.IO.File.SetLastAccessTime(Path(), dateTime);
+    }
+
+    public void SetLastAccessTime() => SetLastAccessTime(DateTime.Now);
+
 }

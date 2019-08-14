@@ -34,6 +34,8 @@ public class ManipulatableManager : MonoBehaviour
     public void Start()
     {
         masterManager = MasterManager.GetManager();
+        rotationHelper = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        rotationHelper.GetComponent<Renderer>().enabled = false;
 
         right.Setup();
         left.Setup();
