@@ -12,6 +12,7 @@ public abstract class FileBrowserView : LateObserver
     [SerializeField] private Transform contentRoot;
     [SerializeField] private FileView fileViewPrefab;
     [SerializeField] private Color fileColor1, fileColor2;
+    [SerializeField] protected ErrorDialog errorDialog;
 
     //sorting
     [SerializeField] private SortByDropdown sortByDropdown;
@@ -48,6 +49,30 @@ public abstract class FileBrowserView : LateObserver
 
     public override void LateNotify(object Sender, EventArgs args)
     {
+        try
+        {
+            GenerateFiles(Sender, args);
+        }
+        catch(Exception e)
+        {
+            Debug.Log(e.StackTrace);
+            errorDialog.Show(e.Message);
+        }
+    }
+
+    public virtual void SetupFileView(FileView view, IFile file, Color color)
+    {
+        view.SetUp(file, color,this.errorDialog);
+    }
+
+
+    /// <summary>
+    /// Create the files views.
+    /// </summary>
+    /// <param name="Sender"></param>
+    /// <param name="args"></param>
+    private void GenerateFiles(object Sender, EventArgs args)
+    {
         while (activeViews.Count > 0)
             filePool.Push(activeViews.Pop());
 
@@ -67,16 +92,10 @@ public abstract class FileBrowserView : LateObserver
             view.transform.localPosition = Vector3.zero;
             view.transform.localScale = Vector3.one;
 
-            SetupFileView(view,files[i], ((i % 2 == 0) ? fileColor1 : fileColor2));
+            SetupFileView(view, files[i], ((i % 2 == 0) ? fileColor1 : fileColor2));
 
             activeViews.Push(view);
 
         }
-
-    }
-
-    public virtual void SetupFileView(FileView view, IFile file, Color color)
-    {
-        view.SetUp(file, color);
     }
 }

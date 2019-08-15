@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,7 +17,7 @@ public class TrackableObjectView : FileBrowserView
     [SerializeField] private Keyboard keyboard;
 
     [SerializeField] private Button clearBtn, saveBtn;
-    
+
 
 
     private MasterManager masterManager;
@@ -34,16 +35,16 @@ public class TrackableObjectView : FileBrowserView
     protected override FileManager GetFileManager() => trackableObjectManager.FileManager;
 
     public override void SetupFileView(FileView view, IFile file, Color color)
-    {        
-        ((TrackableObjectFileView)view).Setup(file, color,this);
+    {
+        ((TrackableObjectFileView)view).Setup(file, color, this);
     }
 
     /// <summary>
     /// Loads a file.
     /// </summary>
     /// <param name="file">The file to load.</param>
-    public void Load(IFile file) => trackableObjectManager.Load(file);
-    
+    public void Load(IFile file) => CatchError(new UnityAction(()=> trackableObjectManager.Load(file)));
+
     /// <summary>
     /// Deletes a file.
     /// </summary>
@@ -56,7 +57,7 @@ public class TrackableObjectView : FileBrowserView
     /// <summary>
     /// Remove every generated object in the scene
     /// </summary>
-    public void Clear() => trackableObjectManager.Clear();
+    public void Clear() => CatchError(trackableObjectManager.Clear);
 
     /// <summary>
     /// show the keyboard, get text, save a file.
@@ -67,10 +68,26 @@ public class TrackableObjectView : FileBrowserView
     {
         return new UnityAction(() => { trackableObjectManager.Delete(file); });
     }
-     
+
     private UnityAction<string> SaveAction()
     {
         return new UnityAction<string>((string value) => { trackableObjectManager.Save(value); });
     }
 
+    /// <summary>
+    /// A standard way for us to catch errors and display them to the user.
+    /// </summary>
+    /// <param name="action">The action we want to error check.</param>
+    private void CatchError(UnityAction action)
+    {
+        try
+        {
+            action.Invoke();
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.TargetSite);
+            errorDialog.Show(e.Message);
+        }
+    }
 }

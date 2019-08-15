@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
+using System;
 
 public class Keyboard : ObservableComponent
 {
@@ -14,6 +15,7 @@ public class Keyboard : ObservableComponent
     [SerializeField] private TMP_InputField textDisplay;
     [SerializeField] private Button acceptInput;
     [SerializeField] private Button dismiss;
+    [SerializeField] private ErrorDialog errorDialog;
 
     /// <summary>
     /// The current text the keyboard is showing.
@@ -54,7 +56,7 @@ public class Keyboard : ObservableComponent
     /// <param name="OnAcceptedAction">The action to be done, when the user presses enter. </param>
     public void Show(UnityAction<string> OnAcceptedAction)
     {
-        this.OnAcceptedAction = OnAcceptedAction;
+        this.OnAcceptedAction = ErrorAction(OnAcceptedAction);
         this.gameObject.SetActive(true);
     }
 
@@ -77,6 +79,28 @@ public class Keyboard : ObservableComponent
         Clear();
     }
 
+    /// <summary>
+    /// Wrap an action, so that if it throws an error; We can catch it.
+    /// </summary>
+    /// <param name="action">The action we want to wrap</param>
+    /// <returns>The wrapped action</returns>
+    private UnityAction<string> ErrorAction(UnityAction<string> action)
+    {
+        return new UnityAction<string>((string value) =>
+        {
+            try
+            {
+                action.Invoke(value);
+            }
+            catch (Exception e)
+            {
+                this.Hide();
+                errorDialog.Show(e.Message);
+                Debug.Log(e.StackTrace);
+            }
+
+        });
+    }
 
     #region Setup
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
+using System;
 
 /// <summary>
 /// A dialog box to ask a yes/no question. e.g. Are tou sure you want to delete this file?
@@ -22,6 +23,7 @@ public class Dialog : ObservableComponent
     [SerializeField]private TextMeshProUGUI title, message, negativeButtonText, positiveButtonText;
     [SerializeField] private Button positiveButton;
     [SerializeField] private Button negativeButton, dismissButton;
+    [SerializeField] private ErrorDialog errorDialog;
 
     private UnityAction currentAction;
     private bool easyDismiss;
@@ -63,8 +65,9 @@ public class Dialog : ObservableComponent
         this.positiveButtonText.SetText(positiveText);
 
         //button action
-        this.positiveButton.onClick.AddListener(action);
-        this.currentAction = action;
+        UnityAction eAction = errorDialog ? ErrorAction(action) : action;
+        this.positiveButton.onClick.AddListener(eAction);
+        this.currentAction = eAction;
 
         this.easyDismiss = easyDismiss;
 
@@ -80,6 +83,7 @@ public class Dialog : ObservableComponent
     /// <param name="easyDismiss"> Can we dismiss this dialog by clicking off the dialog? </param>
     public void Show(UnityAction action, string title, string message, bool easyDismiss = true) => Show(action, title, message, defaultNegativeText, defaultPositiveText, easyDismiss);
 
+   
 
     /// <summary>
     /// Hide the dialog from the user
@@ -116,5 +120,29 @@ public class Dialog : ObservableComponent
         if (this.easyDismiss)
             Hide();
     }
+
+    /// <summary>
+    /// Wrap an action, so that if it throws an error; We can catch it.
+    /// </summary>
+    /// <param name="action">The action we want to wrap</param>
+    /// <returns>The wrapped action</returns>
+    private UnityAction ErrorAction(UnityAction action)
+    {
+        return new UnityAction(() => 
+        {
+            try
+            {
+                action.Invoke();
+            }
+            catch(Exception e)
+            {
+                this.Hide(); 
+                errorDialog.Show(e.Message);
+                Debug.Log(e.StackTrace);
+            }
+           
+        });
+    }
+
 
 }

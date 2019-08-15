@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public abstract class FileView : MonoBehaviour, IPoolable
 {
@@ -10,15 +11,33 @@ public abstract class FileView : MonoBehaviour, IPoolable
     protected IFile file;
     private const string errorStr = "???";
 
+    [SerializeField] protected ErrorDialog errorDialog;
+
     [SerializeField] private TextMeshProUGUI fname, created, modified, accessed;
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Button button;
 
+
     void Awake()
     {
         masterManager = MasterManager.GetManager();
-        this.button.onClick.AddListener(OnButtonPress);
+        this.button.onClick.AddListener(ErrorCheck);
     }
+
+
+
+
+    /// <summary>
+    /// Setup this view.
+    /// </summary>
+    /// <param name="file">The file we want to represent</param>
+    /// <param name="backgroundColor">an alternate background color</param>
+    public virtual void SetUp(IFile file, Color backgroundColor, ErrorDialog errorDialog)
+    {
+        SetUp(file, backgroundColor);
+        this.errorDialog = errorDialog;
+    }
+
 
     /// <summary>
     /// Setup this view.
@@ -44,11 +63,36 @@ public abstract class FileView : MonoBehaviour, IPoolable
         this.accessed.SetText(DateTimeToString.ToString(file.Accessed()));
     }
 
+
+
     /// <summary>
     /// What happens whem the user presses this view?
     /// </summary>
     public abstract void  OnButtonPress();
 
+    /// <summary>
+    /// Wrap the onbutton press code, and handle errors.
+    /// </summary>
+    private void ErrorCheck()
+    {
+        if (!errorDialog)
+        {
+            //if we dont have a dialog, dont check.
+            OnButtonPress();
+            return;
+        }
+
+
+        try
+        {
+            OnButtonPress();
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.TargetSite);
+            errorDialog.Show(e.Message);
+        }
+    }
 
     #region IPoolable
     void IPoolable.OnPoppedFromPool()
