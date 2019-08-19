@@ -8,6 +8,12 @@ public class TrackableObject : MonoBehaviour
 
     MasterManager masterManager;
 
+    private void Awake()
+    {
+        masterManager = MasterManager.GetManager();
+    }
+
+
     public void Load(IMemento memento)
     {
         GenerateObjects(memento);

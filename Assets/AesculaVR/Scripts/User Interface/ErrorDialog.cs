@@ -10,9 +10,10 @@ public class ErrorDialog : MonoBehaviour
     private const string errorString = "???";
     private const string defaultPositiveText = "Ok";
 
-
+#pragma warning disable 0649
     [SerializeField] private TextMeshProUGUI message, positiveButtonText;
     [SerializeField] private Button positiveButton;
+#pragma warning restore 0649
 
     /// <summary>
     /// Is the dialog visible?

@@ -19,11 +19,12 @@ public class Dialog : ObservableComponent
     private const string defaultNegativeText = "Cancel";
     private const string defaultPositiveText = "Accept";
 
-
+#pragma warning disable 0649
     [SerializeField]private TextMeshProUGUI title, message, negativeButtonText, positiveButtonText;
     [SerializeField] private Button positiveButton;
-    [SerializeField] private Button negativeButton, dismissButton;
+    [SerializeField] private Button negativeButton = null, dismissButton = null;
     [SerializeField] private ErrorDialog errorDialog;
+#pragma warning restore 0649
 
     private UnityAction currentAction;
     private bool easyDismiss;

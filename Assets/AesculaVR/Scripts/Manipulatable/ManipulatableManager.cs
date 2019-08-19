@@ -11,7 +11,7 @@ public class ManipulatableManager : MonoBehaviour
     /* private vars */
 
     [SerializeField]
-    private InputManager right, left;
+    private InputManager right = null, left = null;
     private GameObject rotationHelper;
 
     private MasterManager masterManager;

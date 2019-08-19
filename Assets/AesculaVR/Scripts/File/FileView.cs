@@ -11,12 +11,13 @@ public abstract class FileView : MonoBehaviour, IPoolable
     protected IFile file;
     private const string errorStr = "???";
 
+#pragma warning disable 0649
     [SerializeField] protected ErrorDialog errorDialog;
 
     [SerializeField] private TextMeshProUGUI fname, created, modified, accessed;
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Button button;
-
+#pragma warning restore 0649
 
     void Awake()
     {

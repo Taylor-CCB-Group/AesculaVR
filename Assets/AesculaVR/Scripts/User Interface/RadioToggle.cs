@@ -17,7 +17,7 @@ public class RadioToggle : ObservableComponent
     public class RadioToggleEvent : UnityEvent<int> { }
     
    
-    [SerializeField] private List<Toggle> toggles;
+    [SerializeField] private List<Toggle> toggles = null;
     private int activeIndex = 0;
 
     /// <summary>

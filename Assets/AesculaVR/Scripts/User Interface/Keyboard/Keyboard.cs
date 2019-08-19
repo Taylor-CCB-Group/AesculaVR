@@ -10,12 +10,14 @@ public class Keyboard : ObservableComponent
 {
     private UnityAction<string> OnAcceptedAction;
 
+#pragma warning disable 0649
     [SerializeField] private Key keyPrefab;
     [SerializeField] private List<Transform> rows;
     [SerializeField] private TMP_InputField textDisplay;
     [SerializeField] private Button acceptInput;
     [SerializeField] private Button dismiss;
     [SerializeField] private ErrorDialog errorDialog;
+#pragma warning restore 0649
 
     /// <summary>
     /// The current text the keyboard is showing.

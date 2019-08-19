@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlaneLine : Measure
 {
-    [SerializeField] private GameObject quad;
+    [SerializeField] private GameObject quad = null;
        
     private void LateUpdate()
     {

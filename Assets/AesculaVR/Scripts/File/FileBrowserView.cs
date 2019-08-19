@@ -8,15 +8,16 @@ using UnityEngine;
 /// </summary>
 public abstract class FileBrowserView : LateObserver
 {
-
+#pragma warning disable 0649
     [SerializeField] private Transform contentRoot;
     [SerializeField] private FileView fileViewPrefab;
     [SerializeField] private Color fileColor1, fileColor2;
     [SerializeField] protected ErrorDialog errorDialog;
 
     //sorting
-    [SerializeField] private SortByDropdown sortByDropdown;
-    [SerializeField] private OrderByDropdown orderByDropdown;
+    [SerializeField] private SortByDropdown sortByDropdown = null;
+    [SerializeField] private OrderByDropdown orderByDropdown = null;
+#pragma warning restore 0649
 
     //re-using memory
     private FileViewPool filePool;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class VectorMeasure : Measure, IMementoOriginator
 {
-    [SerializeField] private GameObject link;
+    [SerializeField] private GameObject link = null;
     private const float linkScale = 0.25f;
 
     private void LateUpdate()

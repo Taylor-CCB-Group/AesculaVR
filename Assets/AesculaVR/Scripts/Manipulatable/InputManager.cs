@@ -11,6 +11,7 @@ public class InputManager
     public enum Controller { Left, Right }
 
     //private vars
+#pragma warning disable 0649
     [SerializeField]
     private VRTK_ControllerEvents VRTK_ControllerEvents;
     [SerializeField]
@@ -19,7 +20,7 @@ public class InputManager
     private Transform children;
     [SerializeField]
     private Controller type;
-
+#pragma warning restore 0649
 
     //public vars
     public Controller Type { get { return this.type; } }

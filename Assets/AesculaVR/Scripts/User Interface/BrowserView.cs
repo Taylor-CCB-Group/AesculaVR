@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class BrowserView : MonoBehaviour
 {
+#pragma warning disable 0649
     [SerializeField] private RadioToggle sidebar;
     [SerializeField] private List<GameObject> mainViews;
+#pragma warning restore 0649
 
     private void Start()
     {

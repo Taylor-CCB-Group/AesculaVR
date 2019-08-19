@@ -34,8 +34,9 @@ public class PlaneVectorView : MonoBehaviour
 
 
 
-
+#pragma warning disable 0649
     [SerializeField] private RadioToggle planeOrVectorToggle, createOrDestroyToggle;
+#pragma warning restore 0649
 
     private enum PlaneOrVector { Plane, Vector }
     private enum CreateOrDestroy { Create, Destroy }

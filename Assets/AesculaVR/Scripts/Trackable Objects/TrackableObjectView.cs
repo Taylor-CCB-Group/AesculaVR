@@ -12,12 +12,14 @@ public class TrackableObjectView : FileBrowserView
     public FilingMode Mode { get { return filesToggle.Value == 0 ? FilingMode.Load : FilingMode.Delete; } }
 
     private TrackableObjectManager trackableObjectManager;
+
+#pragma warning disable 0649
     [SerializeField] private RadioToggle filesToggle;
     [SerializeField] private Dialog dialog;
     [SerializeField] private Keyboard keyboard;
-
     [SerializeField] private Button clearBtn, saveBtn;
-       
+#pragma warning restore 0649
+
     private MasterManager masterManager;
 
     protected override void Awake()
