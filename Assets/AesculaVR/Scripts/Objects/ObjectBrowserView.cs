@@ -13,7 +13,7 @@ public class ObjectBrowserView : FileBrowserView
     protected override void Awake()
     {
         base.Awake();
-        objectManager = MasterManager.GetManager().ObjectManager;
+        objectManager = EditorManager.GetManager().ObjectManager;
     }
 
     protected override FileManager GetFileManager() => objectManager.FileManager;

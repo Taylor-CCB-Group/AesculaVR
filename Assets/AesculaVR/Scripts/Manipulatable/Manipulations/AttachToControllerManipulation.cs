@@ -30,7 +30,7 @@ namespace AesculaVR.Manipulations
             base.End();
 
             Manipulatable.transform.SetParent(orginalParent);
-            MasterManager.ActionManager.DoAction(new CompoundAction(new IAction[] {
+            EditorManager.ActionManager.DoAction(new CompoundAction(new IAction[] {
                 new MoveAction(Manipulatable,startPosition,Manipulatable.transform.position),
                 new RotateAction(Manipulatable,startRotation, Manipulatable.transform.rotation.eulerAngles)
             }, "Move and rotate a   object"), true);

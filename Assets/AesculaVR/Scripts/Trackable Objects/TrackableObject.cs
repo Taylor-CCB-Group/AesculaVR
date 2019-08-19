@@ -6,11 +6,11 @@ using static TrackableObjectManager;
 public class TrackableObject : MonoBehaviour
 {
 
-    MasterManager masterManager;
+    EditorManager editorManager;
 
     private void Awake()
     {
-        masterManager = MasterManager.GetManager();
+        editorManager = EditorManager.GetManager();
     }
 
 
@@ -22,7 +22,7 @@ public class TrackableObject : MonoBehaviour
 
     public void SetTracker(int i)
     {
-       this.transform.SetParent(masterManager.TrackerManager.Trackers[i].transform);
+       this.transform.SetParent(editorManager.TrackerManager.Trackers[i].transform);
     }
 
     /// <summary>
@@ -36,12 +36,12 @@ public class TrackableObject : MonoBehaviour
 
         for (int i = 0; i < trackableObjectsMemento.objects.Count; i++)
         {
-            ObjectManager.GenerateObjectAction action = GenerateObjecFomMemento(trackableObjectsMemento.objects[i], masterManager.TrackerManager.Main?.transform);
+            ObjectManager.GenerateObjectAction action = GenerateObjecFomMemento(trackableObjectsMemento.objects[i], editorManager.TrackerManager.Main?.transform);
             action.GeneratedObject.GetComponent<BoxCollider>().enabled = false;
             actions.Add(action);
         }
 
         IAction compound = new CompoundAction(actions, "Loaded in a trackable Object");
-        masterManager.ActionManager.DoAction(compound);
+        editorManager.ActionManager.DoAction(compound);
     }
 }

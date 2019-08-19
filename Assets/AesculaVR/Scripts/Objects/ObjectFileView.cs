@@ -13,8 +13,8 @@ public class ObjectFileView : FileView
 
     public override void OnButtonPress()
     {
-        masterManager.ActionManager.DoAction(
-            masterManager.ObjectManager.GenerateObject(this.file)
+        editorManager.ActionManager.DoAction(
+            editorManager.ObjectManager.GenerateObject(this.file)
             );
     }
 

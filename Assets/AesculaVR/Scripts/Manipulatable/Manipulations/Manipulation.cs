@@ -11,14 +11,14 @@ namespace AesculaVR.Manipulations
     {
         private InputManager primary, secondary;
         private Manipulatable manipulatable;
-        private MasterManager masterManager;
+        private EditorManager editorManager;
 
         protected InputManager Primary { get { return primary; } }
         protected InputManager Secondary { get { return secondary; } }
 
 
         public Manipulatable Manipulatable { get { return manipulatable; } }
-        public MasterManager MasterManager { get { return masterManager; } }
+        public EditorManager EditorManager { get { return editorManager; } }
 
         /// <summary>
         /// The Start of the manlipulation.
@@ -29,7 +29,7 @@ namespace AesculaVR.Manipulations
             this.manipulatable = manipulatable;
             this.primary = primary;
             this.secondary = secondary;
-            this.masterManager = MasterManager.GetManager();
+            this.editorManager = EditorManager.GetManager();
 
             this.manipulatable.OnTransformationStarted();
         }

@@ -57,9 +57,9 @@ namespace AesculaVR.Manipulations
             base.End();
 
             Vector3 worldRotation = Manipulatable.transform.rotation.eulerAngles;
-            Manipulatable.transform.SetParent(orginalParent);
+            EditorManager.transform.SetParent(orginalParent);
 
-            MasterManager.ActionManager.DoAction(new CompoundAction(new IAction[]
+            EditorManager.ActionManager.DoAction(new CompoundAction(new IAction[]
             {
                 new ScaleAction(Manipulatable, startScale, Manipulatable.transform.localScale),
                 new MoveAction (Manipulatable, startPosition, Manipulatable.transform.position),

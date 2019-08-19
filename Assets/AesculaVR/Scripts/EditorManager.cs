@@ -2,29 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MasterManager
+public class EditorManager : MonoBehaviour
 {
 
-    private static MasterManager manager;
-    public static MasterManager GetManager()
+    private static EditorManager manager;
+    public static EditorManager GetManager()
     {
         if (manager == null)
-            manager = new MasterManager();
+        {
+            manager = GameObject.FindObjectOfType<EditorManager>();
+            manager.Setup();
+        }
         return manager;
     }
 
-    private readonly ObjectManager          objectManager;
-    private readonly ActionManager          actionManager;
-    private readonly TrackableObjectManager trackableObjectManager;
-    private readonly TrackerManager         trackerManager;
+    private bool isSetup = false;
+
+    private ObjectManager          objectManager;
+    private ActionManager          actionManager;
+    private TrackableObjectManager trackableObjectManager;
+    private TrackerManager         trackerManager;
 
     public ObjectManager          ObjectManager { get { return objectManager; } }
     public ActionManager          ActionManager { get { return actionManager; } }
     public TrackableObjectManager TrackableObjectManager { get { return trackableObjectManager; } }
     public TrackerManager         TrackerManager { get { return trackerManager; } }
 
-    private MasterManager()
+
+    private void Setup()
     {
+        if (isSetup)
+            return;
+        isSetup = true;
+
         objectManager = new ObjectManager();
         actionManager = new ActionManager();
         trackableObjectManager = new TrackableObjectManager(this);

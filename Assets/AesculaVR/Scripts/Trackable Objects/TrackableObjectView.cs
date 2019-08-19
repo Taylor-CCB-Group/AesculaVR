@@ -20,13 +20,14 @@ public class TrackableObjectView : FileBrowserView
     [SerializeField] private Button clearBtn, saveBtn;
 #pragma warning restore 0649
 
-    private MasterManager masterManager;
+    private EditorManager editorManager;
 
     protected override void Awake()
     {
         base.Awake();
-        trackableObjectManager = MasterManager.GetManager().TrackableObjectManager;
-        masterManager = MasterManager.GetManager();
+        editorManager = EditorManager.GetManager();
+        trackableObjectManager = editorManager.TrackableObjectManager;
+        
 
         clearBtn.onClick.AddListener(Clear);
         saveBtn.onClick.AddListener(Save);

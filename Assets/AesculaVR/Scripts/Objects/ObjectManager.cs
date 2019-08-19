@@ -38,7 +38,7 @@ public class ObjectManager : ObservableObject, IObserver
             boxCollider.center = boxSize / 3;
 
             generatedObject.Setup(file);
-            generatedObject.transform.SetParent(MasterManager.GetManager().TrackerManager.Main?.transform);
+            generatedObject.transform.SetParent(EditorManager.GetManager().TrackerManager.Main?.transform);
 
             file.SetLastAccessTime();
             

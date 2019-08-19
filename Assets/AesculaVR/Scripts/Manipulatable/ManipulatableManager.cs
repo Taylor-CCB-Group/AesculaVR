@@ -14,7 +14,7 @@ public class ManipulatableManager : MonoBehaviour
     private InputManager right = null, left = null;
     private GameObject rotationHelper;
 
-    private MasterManager masterManager;
+    private EditorManager editorManager;
 
 
     /* public vars */
@@ -33,7 +33,7 @@ public class ManipulatableManager : MonoBehaviour
 
     public void Start()
     {
-        masterManager = MasterManager.GetManager();
+        editorManager = EditorManager.GetManager();
         rotationHelper = GameObject.CreatePrimitive(PrimitiveType.Cube);
         rotationHelper.GetComponent<Renderer>().enabled = false;
 

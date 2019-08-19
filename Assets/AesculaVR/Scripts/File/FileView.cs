@@ -7,7 +7,7 @@ using System;
 
 public abstract class FileView : MonoBehaviour, IPoolable
 {
-    protected MasterManager masterManager = MasterManager.GetManager();
+    protected EditorManager editorManager;
     protected IFile file;
     private const string errorStr = "???";
 
@@ -21,7 +21,7 @@ public abstract class FileView : MonoBehaviour, IPoolable
 
     void Awake()
     {
-        masterManager = MasterManager.GetManager();
+        editorManager = EditorManager.GetManager();
         this.button.onClick.AddListener(ErrorCheck);
     }
 

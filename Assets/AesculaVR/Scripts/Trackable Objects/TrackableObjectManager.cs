@@ -10,12 +10,12 @@ public class TrackableObjectManager : IMementoOriginator
     public FileManager FileManager { get { return fileManager; } }
     private TrackableObjectFileManager fileManager;
 
-    private MasterManager masterManager;
+    private EditorManager editorManager;
 
-    public TrackableObjectManager(MasterManager masterManager)
+    public TrackableObjectManager(EditorManager editorManager)
     {
         fileManager = new TrackableObjectFileManager();
-        this.masterManager = masterManager;
+        this.editorManager = editorManager;
     }
 
 
@@ -40,17 +40,17 @@ public class TrackableObjectManager : IMementoOriginator
     {
         Debug.Log("Hello");
 
-        List<GeneratedObject> objects = masterManager.ObjectManager.GeneratedObjects;
+        List<GeneratedObject> objects = editorManager.ObjectManager.GeneratedObjects;
         List<IAction> actions = new List<IAction>(objects.Count);
 
         while (objects.Count > 0)
         {
-            IAction action = masterManager.ObjectManager.DestroyObject(objects[objects.Count - 1]);
+            IAction action = editorManager.ObjectManager.DestroyObject(objects[objects.Count - 1]);
             objects.RemoveAt(objects.Count - 1);
             actions.Add(action);
         }
 
-        masterManager.ActionManager.DoAction(new CompoundAction(actions, "Clear all the objects in the scene"));
+        editorManager.ActionManager.DoAction(new CompoundAction(actions, "Clear all the objects in the scene"));
 
     }
 
@@ -59,7 +59,8 @@ public class TrackableObjectManager : IMementoOriginator
     public IMemento SaveMemento()
     {
         return new TrackableObjectsMemento
-        (        masterManager.ObjectManager.GeneratedObjectsReference
+        (
+            editorManager.ObjectManager.GeneratedObjectsReference
         ); 
     }
 
@@ -71,18 +72,18 @@ public class TrackableObjectManager : IMementoOriginator
         for(int i = 0; i < trackableObjectsMemento.objects.Count; i++)
         {
 
-            ObjectManager.GenerateObjectAction action = GenerateObjecFomMemento(trackableObjectsMemento.objects[i], masterManager.TrackerManager.Main?.transform);
+            ObjectManager.GenerateObjectAction action = GenerateObjecFomMemento(trackableObjectsMemento.objects[i], editorManager.TrackerManager.Main?.transform);
             actions.Add(action);
         }
 
         IAction compound = new CompoundAction(actions, "Loaded in a trackable Object");
-        masterManager.ActionManager.DoAction(compound);
+        editorManager.ActionManager.DoAction(compound);
     }
 
     public static ObjectManager.GenerateObjectAction GenerateObjecFomMemento (TrackableObjectsMemento.GeneratedObjectMemento generatedObjectMemento, Transform parent)
     {
-        MasterManager masterManager = MasterManager.GetManager();
-        ObjectManager.GenerateObjectAction action = (ObjectManager.GenerateObjectAction)masterManager.ObjectManager.GenerateObject(new File(generatedObjectMemento.objPath));
+        EditorManager editorManager = EditorManager.GetManager();
+        ObjectManager.GenerateObjectAction action = (ObjectManager.GenerateObjectAction)editorManager.ObjectManager.GenerateObject(new File(generatedObjectMemento.objPath));
         GeneratedObject go = action.GeneratedObject;
         //set go to be child of tracker.
         go.transform.SetParent(parent);
