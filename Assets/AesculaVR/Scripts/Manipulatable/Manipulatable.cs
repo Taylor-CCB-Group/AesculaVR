@@ -18,6 +18,9 @@ public class Manipulatable : MonoBehaviour, IManipulatable
     private UnityEvent OnTransformationEndedEvent;
     private UnityEvent OnTransformationEvent;
 
+    [SerializeField] private bool scalable = true;
+    public bool Scalable => scalable;
+
     private bool isTransforming;
 
     /// <summary>

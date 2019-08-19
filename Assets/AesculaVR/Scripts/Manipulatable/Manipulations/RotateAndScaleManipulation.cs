@@ -45,7 +45,10 @@ namespace AesculaVR.Manipulations
             base.Update();
 
             rotationHelper.transform.position = ((Secondary.Tip.position + Primary.Tip.position) / 2) - ((secondaryStartPos + primaryStartPos) / 2) + startPosition;
-            Manipulatable.transform.localScale = startScale * (Vector3.Distance(Secondary.Tip.position, Primary.Tip.position) / Vector3.Distance(secondaryStartPos, primaryStartPos));
+
+            if(Manipulatable.Scalable)
+                Manipulatable.transform.localScale = startScale * (Vector3.Distance(Secondary.Tip.position, Primary.Tip.position) / Vector3.Distance(secondaryStartPos, primaryStartPos));
+
             rotationHelper.transform.rotation = Quaternion.LookRotation(Primary.Tip.position - Secondary.Tip.position, Vector3.up);
         }
 
