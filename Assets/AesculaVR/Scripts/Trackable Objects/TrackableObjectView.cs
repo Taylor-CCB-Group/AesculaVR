@@ -17,9 +17,7 @@ public class TrackableObjectView : FileBrowserView
     [SerializeField] private Keyboard keyboard;
 
     [SerializeField] private Button clearBtn, saveBtn;
-
-
-
+       
     private MasterManager masterManager;
 
     protected override void Awake()

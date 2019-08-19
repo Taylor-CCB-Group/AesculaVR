@@ -70,20 +70,28 @@ public class TrackableObjectManager : IMementoOriginator
 
         for(int i = 0; i < trackableObjectsMemento.objects.Count; i++)
         {
-            ObjectManager.GenerateObjectAction action  =  (ObjectManager.GenerateObjectAction)masterManager.ObjectManager.GenerateObject(new File(trackableObjectsMemento.objects[i].objPath));
-            GeneratedObject go = action.GeneratedObject;
-            //set go to be child of tracker.
-            go.transform.SetParent(masterManager.TrackerManager.Main?.transform);
 
-            go.transform.localPosition= trackableObjectsMemento.objects[i].localPosition;
-            go.transform.localRotation = Quaternion.Euler(trackableObjectsMemento.objects[i].rotation);
-            go.transform.localScale = trackableObjectsMemento.objects[i].scale;
-
+            ObjectManager.GenerateObjectAction action = GenerateObjecFomMemento(trackableObjectsMemento.objects[i], masterManager.TrackerManager.Main?.transform);
             actions.Add(action);
         }
 
         IAction compound = new CompoundAction(actions, "Loaded in a trackable Object");
         masterManager.ActionManager.DoAction(compound);
+    }
+
+    public static ObjectManager.GenerateObjectAction GenerateObjecFomMemento (TrackableObjectsMemento.GeneratedObjectMemento generatedObjectMemento, Transform parent)
+    {
+        MasterManager masterManager = MasterManager.GetManager();
+        ObjectManager.GenerateObjectAction action = (ObjectManager.GenerateObjectAction)masterManager.ObjectManager.GenerateObject(new File(generatedObjectMemento.objPath));
+        GeneratedObject go = action.GeneratedObject;
+        //set go to be child of tracker.
+        go.transform.SetParent(parent);
+
+        go.transform.localPosition = generatedObjectMemento.localPosition;
+        go.transform.localRotation = Quaternion.Euler(generatedObjectMemento.rotation);
+        go.transform.localScale = generatedObjectMemento.scale;
+
+        return action;
     }
 
     [System.Serializable]
