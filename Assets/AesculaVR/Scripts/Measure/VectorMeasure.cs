@@ -53,6 +53,11 @@ public class VectorMeasure : Measure, IMementoOriginator
         link.transform.LookAt(positionB.transform);
     }
 
+    public override void SetColor(Color color)
+    {
+        base.SetColor(color);
+        this.link.GetComponent<Renderer>().material.color = color;
+    }
 
 
 }

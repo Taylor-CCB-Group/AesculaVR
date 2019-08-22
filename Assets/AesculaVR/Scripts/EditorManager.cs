@@ -22,12 +22,17 @@ public class EditorManager : MonoBehaviour
     private ActionManager          actionManager;
     private TrackableObjectManager trackableObjectManager;
     private TrackerManager         trackerManager;
+    private MeasureManager         measureManager;
+    private ToolManager            toolManager;
+    private ManipulatableManager   manipulatableManager;
 
     public ObjectManager          ObjectManager { get { return objectManager; } }
     public ActionManager          ActionManager { get { return actionManager; } }
     public TrackableObjectManager TrackableObjectManager { get { return trackableObjectManager; } }
     public TrackerManager         TrackerManager { get { return trackerManager; } }
-
+    public MeasureManager         MeasureManager { get { return measureManager; } }
+    public ToolManager            ToolManager => toolManager;
+    public ManipulatableManager   ManipulatableManager => manipulatableManager;
 
     private void Setup()
     {
@@ -39,6 +44,11 @@ public class EditorManager : MonoBehaviour
         actionManager = new ActionManager();
         trackableObjectManager = new TrackableObjectManager(this);
         trackerManager = new TrackerManager();
+        measureManager = new MeasureManager();
+
+        toolManager          = GameObject.FindObjectOfType<ToolManager>();
+        manipulatableManager = GameObject.FindObjectOfType<ManipulatableManager>();
+        
     }
 
 }
