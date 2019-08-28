@@ -36,7 +36,7 @@ public class TrackableObject : MonoBehaviour
 
         for (int i = 0; i < trackableObjectsMemento.objects.Count; i++)
         {
-            ObjectManager.GenerateObjectAction action = GenerateObjecFomMemento(trackableObjectsMemento.objects[i], editorManager.TrackerManager.Main?.transform);
+            ObjectManager.GenerateObjectAction action = GenerateObjectFomMemento(trackableObjectsMemento.objects[i], editorManager.TrackerManager.Main?.transform);
             action.GeneratedObject.GetComponent<BoxCollider>().enabled = false;
             actions.Add(action);
         }

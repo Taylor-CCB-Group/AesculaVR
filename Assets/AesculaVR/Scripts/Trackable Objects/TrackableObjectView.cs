@@ -87,7 +87,9 @@ public class TrackableObjectView : FileBrowserView
         }
         catch (Exception e)
         {
-            Debug.Log(e.TargetSite);
+            Debug.Log(e.Message);
+            Debug.Log(e.StackTrace);
+            Debug.Log(e.Source);
             errorDialog.Show(e.Message);
         }
     }

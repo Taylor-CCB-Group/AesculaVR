@@ -1970,7 +1970,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planeOrVectorToggle: {fileID: 297043496}
-  createOrDestroyToggle: {fileID: 424691821}
   measureViewPrefab: {fileID: 6332604211138255718, guid: 8e32979661054c94585ad72a9a54b0c0,
     type: 3}
   color1: {r: 0.8784314, g: 0.8784314, b: 0.8784314, a: 1}

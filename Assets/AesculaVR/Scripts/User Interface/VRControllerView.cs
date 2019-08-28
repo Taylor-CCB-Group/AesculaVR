@@ -14,7 +14,7 @@ public class VRControllerView : LateObserver
     [SerializeField] private Sprite  undoIcon, redoIcon;    
 #pragma warning restore 0649
 
-    EditorManager editorManager;
+    private EditorManager editorManager;
 
 
     protected void Awake()
@@ -42,7 +42,10 @@ public class VRControllerView : LateObserver
 
     }
 
-
+    /// <summary>
+    /// Generate The undo button
+    /// </summary>
+    /// <returns> the undo button. </returns>
     private VRTK_RadialMenu.RadialMenuButton UndoButton()
     {
         VRTK_RadialMenu.RadialMenuButton button = new VRTK_RadialMenu.RadialMenuButton();
@@ -51,6 +54,10 @@ public class VRControllerView : LateObserver
         return button;
     }
 
+    /// <summary>
+    /// Generate The redo button
+    /// </summary>
+    /// <returns> the redo button. </returns>
     private VRTK_RadialMenu.RadialMenuButton RedoButton()
     {
         VRTK_RadialMenu.RadialMenuButton button = new VRTK_RadialMenu.RadialMenuButton();
@@ -59,12 +66,18 @@ public class VRControllerView : LateObserver
         return button;
     }
 
+    /// <summary>
+    /// if possible, Undo an action
+    /// </summary>
     private void Undo()
     {
         if (editorManager.ActionManager.CanUndo())
             editorManager.ActionManager.UndoAction();
     }
 
+    /// <summary>
+    /// if possible, redo an action
+    /// </summary>
     private void Redo()
     {
         if (editorManager.ActionManager.CanRedo())

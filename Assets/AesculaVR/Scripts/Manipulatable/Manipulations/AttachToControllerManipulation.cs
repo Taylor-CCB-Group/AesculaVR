@@ -28,7 +28,6 @@ namespace AesculaVR.Manipulations
         public override void End()
         {
             base.End();
-
             Manipulatable.transform.SetParent(orginalParent);
             EditorManager.ActionManager.DoAction(new CompoundAction(new IAction[] {
                 new MoveAction(Manipulatable,startPosition,Manipulatable.transform.position),

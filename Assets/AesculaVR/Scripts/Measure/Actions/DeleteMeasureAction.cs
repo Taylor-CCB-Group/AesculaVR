@@ -2,13 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// An Action to delete an measure.
+/// </summary>
 public class DeleteMeasureAction : IAction
 {
     public string Description() => "Delete a measurement";
 
-    private Measure measure;
-    private EditorManager editorManager;
+    private readonly Measure measure;
+    private readonly EditorManager editorManager;
 
+    /// <summary>
+    /// construct the new delete measure action.
+    /// </summary>
+    /// <param name="measure"> The measure to delete. </param>
     public DeleteMeasureAction(Measure measure)
     {
         this.measure = measure;

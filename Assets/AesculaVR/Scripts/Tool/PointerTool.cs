@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+/// <summary>
+/// A tool to select UI elements.
+/// </summary>
 public class PointerTool : ITool
 {
 
     private ToolManager.UIPointer UIPointer;
-    private Sprite icon; 
+    private Sprite icon;
 
+    /// <summary>
+    /// Construct the new pointer tool
+    /// </summary>
+    /// <param name="UIPointer">The UIPointer for the tools hand.</param>
     public PointerTool(ToolManager.UIPointer UIPointer)
     {
         this.UIPointer = UIPointer;
@@ -19,13 +27,11 @@ public class PointerTool : ITool
 
     public void OnDeselected()
     {
-        Debug.Log("PointerTool => OnDeselected");
         UIPointer.SetEnabled(false);
     }
 
     public void OnSelected()
     {
-        Debug.Log("PointerTool => OnSelected");
         UIPointer.SetEnabled(true);
     }
 

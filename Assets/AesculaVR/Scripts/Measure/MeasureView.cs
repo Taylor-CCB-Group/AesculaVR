@@ -5,6 +5,10 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
+
+/// <summary>
+/// A view that represenets a single measurement.
+/// </summary>
 public class MeasureView : MonoBehaviour, IPoolable
 {
 
@@ -28,6 +32,12 @@ public class MeasureView : MonoBehaviour, IPoolable
         this.deleteButton.onClick.AddListener(ErrorCheck);
     }
 
+    /// <summary>
+    /// Sets up the view.
+    /// </summary>
+    /// <param name="measure"> The measure to represent. </param>
+    /// <param name="backgroundColor"> the background color to the view. </param>
+    /// <param name="errorDialog"> The error dialog to use. </param>
     public virtual void SetUp(Measure measure, Color backgroundColor, ErrorDialog errorDialog)
     {
         this.measure = measure;
@@ -62,10 +72,19 @@ public class MeasureView : MonoBehaviour, IPoolable
     }
     #endregion
 
+    /// <summary>
+    /// Delete the Measure.
+    /// </summary>
     private  void OnButtonPress() => editorManager.ActionManager.DoAction(new DeleteMeasureAction(measure));
 
+    /// <summary>
+    /// Update the vector measurement text.
+    /// </summary>
     public void UpdateDistanceText() => direction.SetText(measure.Value.normalized.ToString());
 
+    /// <summary>
+    /// Run the OnButtonPress method, but catch any errors it might throw.
+    /// </summary>
     private void ErrorCheck()
     {
         if (!errorDialog)

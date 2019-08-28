@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class VectorMeasure : Measure, IMementoOriginator
 {
-    [SerializeField] private GameObject link = null;
+
+    public new static MeasureManager.MeasureType Type => MeasureManager.MeasureType.Vector;
+
+#pragma warning disable 0649
+    [SerializeField] private GameObject link;
+#pragma warning restore 0649
+
     private const float linkScale = 0.25f;
 
     private void LateUpdate()
@@ -12,6 +18,9 @@ public class VectorMeasure : Measure, IMementoOriginator
         DrawLinkBetweenPoints();
     }
 
+    /// <summary>
+    /// rotate, scale and move the link gameobject so it connects the two points.
+    /// </summary>
     private void DrawLinkBetweenPoints()
     {
         //this was ripped from bable VR.
@@ -59,5 +68,13 @@ public class VectorMeasure : Measure, IMementoOriginator
         this.link.GetComponent<Renderer>().material.color = color;
     }
 
+    public override IMemento SaveMemento() => new VectorMemento(this);
 
+    public class VectorMemento : Memento
+    {
+        public VectorMemento(Measure measure) : base(measure)
+        {
+            this.type = (int)VectorMeasure.Type;
+        }
+    }
 }

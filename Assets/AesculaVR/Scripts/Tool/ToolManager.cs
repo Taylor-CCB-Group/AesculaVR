@@ -5,6 +5,9 @@ using VRTK;
 
 public class ToolManager : ObservableComponent
 {
+    /// <summary>
+    /// The VRTK components that enable a UI pointer to work in a scene.
+    /// </summary>
     [System.Serializable]
     public struct UIPointer
     {
@@ -50,7 +53,10 @@ public class ToolManager : ObservableComponent
     public ITool Tool => setTool;
     public ITool Pointer => pointerTool;
 
-
+    /// <summary>
+    /// Set the current mode.
+    /// </summary>
+    /// <param name="mode">The mode we want to set to</param>
     public void SetMode(Mode mode)
     {
         if(mode == Mode.Pointer)
@@ -68,6 +74,10 @@ public class ToolManager : ObservableComponent
         NotifyObservers();
     }
 
+    /// <summary>
+    /// Set the current tool.
+    /// </summary>
+    /// <param name="tool">The tool we want to use.</param>
     public void SetTool(ITool tool)
     {
         Debug.Log("Setting tool to " + tool.ToString());
@@ -85,8 +95,14 @@ public class ToolManager : ObservableComponent
         NotifyObservers();
     }
     
+    /// <summary>
+    /// If we can do so, Toggle the mode between tool and pointer.
+    /// </summary>
     public void ToggleMode()
     {
+        if (!CanToggleMode())
+            return;
+
         if(this.mode == Mode.Tool)
             SetMode(Mode.Pointer);
         else
@@ -98,6 +114,10 @@ public class ToolManager : ObservableComponent
         }
     }
 
+    /// <summary>
+    /// Can we toggle between tool mode and pointer mode? e.g, has the tool been set if we're in pointer mode?
+    /// </summary>
+    /// <returns></returns>
     public bool CanToggleMode() => !(this.mode == Mode.Pointer && setTool == null);
 
 
@@ -122,6 +142,9 @@ public class ToolManager : ObservableComponent
             this.TriggerUpdate();
     }
 
+    /// <summary>
+    /// The first frame the trigger is down.
+    /// </summary>
     public void TriggerDown()
     {
         isTriggerDown = true;
@@ -129,12 +152,17 @@ public class ToolManager : ObservableComponent
     }
 
 
+    /// <summary>
+    /// Gets called while the trigger is held down,
+    /// </summary>
     private void TriggerUpdate()
     {
         this.activeTool?.TriggerUpdate();
     }
 
-
+    /// <summary>
+    /// The first frame of the trigger being released.
+    /// </summary>
     public void TriggerUp()
     {
         isTriggerDown = false;
