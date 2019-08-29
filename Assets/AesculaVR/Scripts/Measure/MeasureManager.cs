@@ -67,7 +67,7 @@ public class MeasureManager : ObservableObject
     /// </summary>
     /// <param name="type"> The type of measurement tp create </param>
     /// <returns>The action that creates the measurement.</returns>
-    public IAction CreateMeasure(MeasureType type) => new CreateMeasureAction(type);
+    public IAction CreateMeasure(MeasureType type) => new CreateEditableMeasureAction(type, editorManager.TrackerManager.Main.transform);
 
     /// <summary>
     /// Returns an action that deletes a measurement.
@@ -78,3 +78,4 @@ public class MeasureManager : ObservableObject
 
     public void SetToolToCreateMeasure(MeasureType type) => editorManager.ToolManager.SetTool(new CreateMeasureTool(type));
 }
+

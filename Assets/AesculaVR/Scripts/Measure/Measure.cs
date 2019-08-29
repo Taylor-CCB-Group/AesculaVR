@@ -68,8 +68,8 @@ public abstract class Measure : MonoBehaviour, IMementoOriginator, IPoolable
     public void RestoreMemento(IMemento memento)
     {
         Memento m = (Memento)memento;
-        this.positionA.transform.position = m.a;
-        this.positionB.transform.position = m.b;
+        this.positionA.transform.localPosition = m.a;
+        this.positionB.transform.localPosition = m.b;
     }
 
 

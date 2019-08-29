@@ -5,13 +5,13 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class TrackableObjectView : FileBrowserView
+public class TrackableObjectEditorView : FileBrowserView
 {
 
     public enum FilingMode { Load, Delete }
     public FilingMode Mode { get { return filesToggle.Value == 0 ? FilingMode.Load : FilingMode.Delete; } }
 
-    private TrackableObjectManager trackableObjectManager;
+    private TrackableObjectEditorManager trackableObjectManager;
 
 #pragma warning disable 0649
     [SerializeField] private RadioToggle filesToggle;

@@ -1,47 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static TrackableObjectManager;
+
 
 public class TrackableObject : MonoBehaviour
 {
 
-    EditorManager editorManager;
-
-    private void Awake()
-    {
-        editorManager = EditorManager.GetManager();
-    }
-
-
-    public void Load(IMemento memento)
-    {
-        GenerateObjects(memento);
-        SetTracker(0);
-    }
-
-    public void SetTracker(int i)
-    {
-       this.transform.SetParent(editorManager.TrackerManager.Trackers[i].transform);
-    }
-
     /// <summary>
-    /// generate the objects from the memento
+    /// Create a Trackable Object from a TrackableObjectMemento.
     /// </summary>
-    /// <param name="memento"></param>
-    private void GenerateObjects(IMemento memento)
+    /// <param name="memento" > The memento to load. </param>
+    /// <param name="parent"  > The parent object for the trackable object. </param>
+    /// <param name="editable"> Will components of the trackable objects be editable? </param>
+    /// <returns></returns>
+    public static IAction CreateFromMemento(TrackableObjectMemento memento, Transform parent, bool editable)
     {
-        TrackableObjectsMemento trackableObjectsMemento = (TrackableObjectsMemento)memento;
-        List<IAction> actions = new List<IAction>(trackableObjectsMemento.objects.Count + 1);
+        List<IAction> actions = new List<IAction>(memento.objects.Count + memento.measures.Count + 1);
 
-        for (int i = 0; i < trackableObjectsMemento.objects.Count; i++)
+        //objects
+        for (int i = 0; i < memento.objects.Count; i++)
         {
-            ObjectManager.GenerateObjectAction action = GenerateObjectFomMemento(trackableObjectsMemento.objects[i], editorManager.TrackerManager.Main?.transform);
-            action.GeneratedObject.GetComponent<BoxCollider>().enabled = false;
+            GenerateObjectAction action = GeneratedObject.GenerateObjectFomMemento(memento.objects[i], parent);
+            action.GeneratedObject.GetComponent<BoxCollider>().enabled = editable;
             actions.Add(action);
         }
 
-        IAction compound = new CompoundAction(actions, "Loaded in a trackable Object");
-        editorManager.ActionManager.DoAction(compound);
+        //measures.
+        for (int i = 0; i < memento.measures.Count; i++)
+        {
+            CreateMeasureAction createMeasureAction = (editable) ?
+                new CreateEditableMeasureAction ((MeasureManager.MeasureType)memento.measures[i].type, parent) :
+                new CreateMeasureAction         ((MeasureManager.MeasureType)memento.measures[i].type, parent) ;
+            createMeasureAction.Measure.RestoreMemento(memento.measures[i]);
+
+            actions.Add(createMeasureAction);
+        }
+
+
+        return new CompoundAction(actions, "Loaded in a trackable Object");
     }
+
+    
 }

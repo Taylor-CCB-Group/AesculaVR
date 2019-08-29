@@ -9,17 +9,17 @@ public class CreateMeasureAction : IActionDereferenceable
 {
     public string Description() => "Create a measurement";
 
-    private readonly Measure measure;
-    private readonly EditorManager editorManager;
+    protected readonly Measure measure;
+
     public Measure Measure => measure;
 
     /// <summary>
     /// Construct the new create measure action.
     /// </summary>
     /// <param name="type">The type of measurement to create.</param>
-    public CreateMeasureAction(MeasureManager.MeasureType type)
+    
+    public CreateMeasureAction(MeasureManager.MeasureType type, Transform parent)
     {
-        editorManager = EditorManager.GetManager();
 
         measure = type == MeasureManager.MeasureType.Plane ?
             (Measure)((GameObject)Resources.Load("MeasurePlane") ).GetComponent<PlaneMeasure >() :
@@ -28,20 +28,16 @@ public class CreateMeasureAction : IActionDereferenceable
         measure = GameObject.Instantiate(measure.gameObject).GetComponent<Measure>();
         measure.SetColor(new Color(Random.value, Random.value, Random.value));
 
-        measure.transform.SetParent(editorManager.TrackerManager.Main.transform);
+        measure.transform.rotation = parent.rotation;
+        measure.transform.SetParent(parent);      
+        measure.transform.position = Vector3.zero;
+
+        measure.SetManipulatablesEnabled(false);
     }
 
-    public void DoAction()
-    {
-        editorManager.MeasureManager.AddMeasure(measure);
-        measure.gameObject.SetActive(true);
-    }
+    public virtual void DoAction() => measure.gameObject.SetActive(true);
 
-    public void UndoAction()
-    {
-        measure.gameObject.SetActive(false);
-        editorManager.MeasureManager.RemoveMeasure(measure);
-    }
+    public virtual void UndoAction() => measure.gameObject.SetActive(false);
 
     public void OnDereferenced() => GameObject.Destroy(measure.gameObject);
 }

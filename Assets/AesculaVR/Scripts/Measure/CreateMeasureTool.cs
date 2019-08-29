@@ -42,12 +42,11 @@ public class CreateMeasureTool : ITool
 
     public void TriggerDown()
     {
-        createMeasureAction = new CreateMeasureAction(type);
+        createMeasureAction = new CreateEditableMeasureAction(type, editorManager.TrackerManager.Main.transform);
 
         createMeasureAction.Measure.PointA.transform.position = tip.transform.position;
         createMeasureAction.Measure.PointB.transform.position = tip.transform.position;
 
-        measure.SetManipulatablesEnabled(false);
         createMeasureAction.DoAction();
     }
 

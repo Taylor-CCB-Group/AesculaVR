@@ -23,21 +23,21 @@ public class EditorManager : MonoBehaviour
 
     private bool isSetup = false;
 
-    private ObjectManager          objectManager;
-    private ActionManager          actionManager;
-    private TrackableObjectManager trackableObjectManager;
-    private TrackerManager         trackerManager;
-    private MeasureManager         measureManager;
-    private ToolManager            toolManager;
-    private ManipulatableManager   manipulatableManager;
+    private ObjectManager                objectManager;
+    private ActionManager                actionManager;
+    private TrackableObjectEditorManager trackableObjectManager;
+    private TrackerManager               trackerManager;
+    private MeasureManager               measureManager;
+    private ToolManager                  toolManager;
+    private ManipulatableManager         manipulatableManager;
 
-    public ObjectManager            ObjectManager   => objectManager;
-    public ActionManager            ActionManager   => actionManager;
-    public TrackerManager           TrackerManager  => trackerManager;
-    public MeasureManager           MeasureManager  => measureManager;
-    public ToolManager              ToolManager     => toolManager;
-    public TrackableObjectManager   TrackableObjectManager  => trackableObjectManager;
-    public ManipulatableManager     ManipulatableManager    => manipulatableManager;
+    public ObjectManager                ObjectManager   => objectManager;
+    public ActionManager                ActionManager   => actionManager;
+    public TrackerManager               TrackerManager  => trackerManager;
+    public MeasureManager               MeasureManager  => measureManager;
+    public ToolManager                  ToolManager     => toolManager;
+    public TrackableObjectEditorManager TrackableObjectManager  => trackableObjectManager;
+    public ManipulatableManager         ManipulatableManager    => manipulatableManager;
 
     private void Setup()
     {
@@ -49,7 +49,7 @@ public class EditorManager : MonoBehaviour
 
         objectManager = new ObjectManager();
         actionManager = new ActionManager();
-        trackableObjectManager = new TrackableObjectManager(this);
+        trackableObjectManager = new TrackableObjectEditorManager(this);
         trackerManager = new TrackerManager();
         measureManager = new MeasureManager();
 
