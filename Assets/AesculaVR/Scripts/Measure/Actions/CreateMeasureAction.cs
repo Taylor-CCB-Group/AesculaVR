@@ -28,9 +28,9 @@ public class CreateMeasureAction : IActionDereferenceable
         measure = GameObject.Instantiate(measure.gameObject).GetComponent<Measure>();
         measure.SetColor(new Color(Random.value, Random.value, Random.value));
 
-        measure.transform.rotation = parent.rotation;
         measure.transform.SetParent(parent);      
         measure.transform.position = Vector3.zero;
+        measure.transform.rotation = Quaternion.identity;
 
         measure.SetManipulatablesEnabled(false);
     }

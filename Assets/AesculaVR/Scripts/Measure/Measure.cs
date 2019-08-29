@@ -52,12 +52,18 @@ public abstract class Measure : MonoBehaviour, IMementoOriginator, IPoolable
     {
 
         [SerializeField] public Vector3 a, b;
+        [SerializeField] public Vector3 rotation, position;
         [SerializeField] public int type;
-
+        
         public Memento(Measure measure)
         {
+            this.rotation = measure.transform.localRotation.eulerAngles;
+            this.position = measure.transform.localPosition;
+
             this.a = measure.positionA.transform.localPosition;
             this.b = measure.positionB.transform.localPosition;
+
+          
             this.type = -1;
         }
 
@@ -68,8 +74,15 @@ public abstract class Measure : MonoBehaviour, IMementoOriginator, IPoolable
     public void RestoreMemento(IMemento memento)
     {
         Memento m = (Memento)memento;
+  
+        this.transform.localRotation = Quaternion.Euler(m.rotation);
+        this.transform.localPosition = m.position;
+
         this.positionA.transform.localPosition = m.a;
         this.positionB.transform.localPosition = m.b;
+
+       
+        
     }
 
 
