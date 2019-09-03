@@ -6,21 +6,25 @@ public class Tracker : MonoBehaviour
 {
     private void Start()
     {
-        EditorManager.GetManager().TrackerManager.Add(this);
+        EditorManager.GetManager()?.TrackerManager.Add(this);
+        MainManager  .GetManager()?.TrackerManager.Add(this);
     }
 
     private void OnEnable()
     {
-        EditorManager.GetManager().TrackerManager.Add(this);
+        EditorManager.GetManager()?.TrackerManager.Add(this);
+        MainManager  .GetManager()?.TrackerManager.Add(this);
     }
 
     private void OnDisable()
     {
-        EditorManager.GetManager().TrackerManager.Remove(this);
+        EditorManager.GetManager()?.TrackerManager.Remove(this);
+        MainManager  .GetManager()?.TrackerManager.Remove(this);
     }
 
     private void OnDestroy()
     {
-        EditorManager.GetManager().TrackerManager.Remove(this);
+        EditorManager.GetManager()?.TrackerManager.Remove(this);
+        MainManager  .GetManager()?.TrackerManager.Remove(this);
     }
 }

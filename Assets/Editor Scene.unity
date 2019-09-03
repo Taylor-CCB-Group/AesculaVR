@@ -7817,8 +7817,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contentRoot: {fileID: 1670360493}
-  fileViewPrefab: {fileID: 2842385014662960491, guid: a97c9c522d1bf1f489e937c506be22ae,
-    type: 3}
+  fileViewPrefab: {fileID: 0}
   fileColor1: {r: 0.8784314, g: 0.8784314, b: 0.8784314, a: 1}
   fileColor2: {r: 0.8117647, g: 0.8117647, b: 0.8117647, a: 1}
   errorDialog: {fileID: 1716042973}

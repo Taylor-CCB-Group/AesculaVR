@@ -4,21 +4,14 @@ using UnityEngine;
 
 public class TrackableObjectFileView : FileView
 {
-    private TrackableObjectEditorView mainView;
 
-    public override void OnButtonPress()
-    {
-        if (mainView.Mode == TrackableObjectEditorView.FilingMode.Delete)
-            mainView.Delete(this.file);
-        else
-            mainView.Load(this.file);
-    }
+    private TrackableObjectView mainView;
 
-    public void Setup(IFile file, Color backgroundColor, TrackableObjectEditorView mainView)
+    public override void OnButtonPress() => mainView.Load(file);
+
+    public void Setup(IFile file, Color backgroundColor, TrackableObjectView mainView)
     {
         this.SetUp(file, backgroundColor);
         this.mainView = mainView;
     }
-
-
 }

@@ -6,8 +6,16 @@ public class MainManager : MonoBehaviour
 {
     private static MainManager manager;
 
+    private ActionManager           actionManager;
+    private TrackableObjectManager  trackableObjectManager;
+    private TrackerManager          trackerManager;
+
+    public ActionManager            ActionManager           => actionManager;
+    public TrackableObjectManager   TrackableObjectManager  => trackableObjectManager;
+    public TrackerManager           TrackerManager          => trackerManager;
+
     /// <summary>
-    /// Get the EditorManager from within the current scene.
+    /// Get the MainManager from within the current scene.
     /// </summary>
     /// <returns></returns>
     public static MainManager GetManager()
@@ -29,7 +37,9 @@ public class MainManager : MonoBehaviour
             return;
         isSetup = true;
 
-
+        actionManager = new ActionManager();
+        trackableObjectManager = new TrackableObjectManager();
+        trackerManager = new TrackerManager();
 
     }
 

@@ -37,7 +37,7 @@ public class TrackableObjectEditorView : FileBrowserView
 
     public override void SetupFileView(FileView view, IFile file, Color color)
     {
-        ((TrackableObjectFileView)view).Setup(file, color, this);
+        ((TrackableObjectEditorFileView)view).Setup(file, color, this);
     }
 
     /// <summary>

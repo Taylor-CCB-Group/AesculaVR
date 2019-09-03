@@ -53,8 +53,9 @@ public class GeneratedObject : MonoBehaviour, IMementoOriginator
     public static GenerateObjectAction GenerateObjectFomMemento(GeneratedObject.Memento generatedObjectMemento, Transform parent)
     {
         EditorManager editorManager = EditorManager.GetManager();
-        GenerateObjectAction action = (GenerateObjectAction)editorManager.ObjectManager.GenerateObject(new File(generatedObjectMemento.objPath));
+        GenerateObjectAction action = new GenerateObjectAction(new File(generatedObjectMemento.objPath), parent, editorManager != null);
         GeneratedObject go = action.GeneratedObject;
+       
         //set go to be child of tracker.
         go.transform.SetParent(parent);
 
@@ -63,5 +64,37 @@ public class GeneratedObject : MonoBehaviour, IMementoOriginator
         go.transform.localScale = generatedObjectMemento.scale;
 
         return action;
+    }
+
+    /// <summary>
+    /// The method that wraps 'Dummiesmans' object loader.
+    /// </summary>
+    /// <param name="file"></param>
+    /// <returns></returns>
+    public static GeneratedObject GenerateObjectFromFile(IFile file, Transform parent, bool editable)
+    {
+        GameObject gameObject = new Dummiesman.OBJLoader().Load(file.Path());
+        GeneratedObject generatedObject = gameObject.AddComponent<GeneratedObject>();
+        if (editable)
+        {
+            Manipulatable manipulatable = gameObject.AddComponent<Manipulatable>();
+        }
+
+        BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
+
+        Vector3 boxSize = gameObject.GetComponentInChildren<MeshRenderer>().bounds.size;
+        boxCollider.size = boxSize;
+        boxSize.x = 0; boxSize.z = 0;
+        boxCollider.center = boxSize / 3;
+
+        generatedObject.Setup(file);
+        generatedObject.transform.SetParent(parent);
+
+        file.SetLastAccessTime();
+
+
+
+        gameObject.transform.localScale = ObjectManager.GeneratedObjectScale;
+        return generatedObject;
     }
 }

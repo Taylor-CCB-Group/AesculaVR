@@ -10,6 +10,8 @@ using UnityEngine.Events;
 public class RadioToggle : ObservableComponent
 {
 
+    public static int EmptyValue => -1;
+
     /// <summary>
     /// gets invoked when the value is set. (even if its the same as before).
     /// </summary>
@@ -17,8 +19,8 @@ public class RadioToggle : ObservableComponent
     public class RadioToggleEvent : UnityEvent<int> { }
     
    
-    [SerializeField] private List<Toggle> toggles = null;
-    private int activeIndex = 0;
+    [SerializeField] protected List<Toggle> toggles = null;
+    protected int activeIndex = EmptyValue;
 
     /// <summary>
     /// A list with each of the toggle elements.
@@ -51,15 +53,34 @@ public class RadioToggle : ObservableComponent
         NotifyObservers();
     }
 
-    protected void Awake()
+    protected virtual void Awake()
     {
 
-        SetActive(0);
+        if(toggles.Count > 0)
+        {
+            SetActive(0);
+            for (int i = 0; i < toggles.Count; i++)
+                toggles[i].onValueChanged.AddListener(valueChangeAction(i));
+        }
+        else
+        {
+            activeIndex = EmptyValue;
+        }
+    }
 
-        for (int i = 0; i < toggles.Count; i++)
-            toggles[i].onValueChanged.AddListener(valueChangeAction(i));
+    public void AddToggle(Toggle toggle)
+    {
+        toggles.Add(toggle);
+
+        if (activeIndex == EmptyValue)
+        {
+            activeIndex = 0;
+        }
+
+        int i = toggles.Count - 1;
+        toggles[i].onValueChanged.AddListener(valueChangeAction(i));
+
         
-
     }
 
     private UnityAction<bool> valueChangeAction(int i) => new UnityAction<bool>((bool v) => { SetActive(i); });

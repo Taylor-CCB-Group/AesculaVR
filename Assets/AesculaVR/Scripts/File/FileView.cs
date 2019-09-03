@@ -8,6 +8,8 @@ using System;
 public abstract class FileView : MonoBehaviour, IPoolable
 {
     protected EditorManager editorManager;
+    protected MainManager   mainManager;
+
     protected IFile file;
     private const string errorStr = "???";
 
@@ -22,6 +24,8 @@ public abstract class FileView : MonoBehaviour, IPoolable
     void Awake()
     {
         editorManager = EditorManager.GetManager();
+        mainManager   = MainManager  .GetManager();
+
         this.button.onClick.AddListener(ErrorCheck);
     }
 
@@ -90,7 +94,8 @@ public abstract class FileView : MonoBehaviour, IPoolable
         }
         catch (Exception e)
         {
-            Debug.Log(e.TargetSite);
+            Debug.Log(e.Message);
+            Debug.Log(e.StackTrace);
             errorDialog.Show(e.Message);
         }
     }

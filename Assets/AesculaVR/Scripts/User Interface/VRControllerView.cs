@@ -15,12 +15,15 @@ public class VRControllerView : LateObserver
 #pragma warning restore 0649
 
     private EditorManager editorManager;
-
+    private MainManager mainManager;
 
     protected void Awake()
     {
+
+        mainManager = MainManager.GetManager();
+
         editorManager = EditorManager.GetManager();
-        editorManager.ToolManager.AddObserver(this);
+        editorManager?.ToolManager.AddObserver(this);
 
         radialMenu.buttons.Clear();
         radialMenu.AddButton(UndoButton());
@@ -29,16 +32,17 @@ public class VRControllerView : LateObserver
 
     public override void LateNotify(object Sender, EventArgs args)
     {
+        if (editorManager)
+        {
+            ToolManager toolManager = editorManager.ToolManager;
+            primaryImage.sprite = toolManager.ActiveTool?.Icon();
 
-        ToolManager toolManager = editorManager.ToolManager;
-        primaryImage.sprite = toolManager.ActiveTool?.Icon();
-
-        secondaryRoot.SetActive(toolManager.CanToggleMode());
-        secondaryImage.overrideSprite = 
-            (toolManager.ToolMode == ToolManager.Mode.Pointer) ? 
-            secondaryImage.sprite = toolManager.Tool?.Icon() : 
-            toolManager.Pointer.Icon();
-  
+            secondaryRoot.SetActive(toolManager.CanToggleMode());
+            secondaryImage.overrideSprite =
+                (toolManager.ToolMode == ToolManager.Mode.Pointer) ?
+                secondaryImage.sprite = toolManager.Tool?.Icon() :
+                toolManager.Pointer.Icon();
+        }  
 
     }
 
