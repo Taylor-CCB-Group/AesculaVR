@@ -6,8 +6,9 @@ public class TrackableObjectView : FileBrowserView
 {
     public FileManager FileManager => mainManager.TrackableObjectManager.FileManager;
 
-
+#pragma warning disable 0649
     [SerializeField] private TrackerRadoToggleView trackersToggle;
+#pragma warning restore 0649
     private MainManager mainManager;
 
     protected override void Awake()

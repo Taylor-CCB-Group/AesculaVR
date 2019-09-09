@@ -39,6 +39,7 @@ public class SteamVR_TrackedObject : MonoBehaviour
 
 	private void OnNewPoses(TrackedDevicePose_t[] poses)
 	{
+
 		if (index == EIndex.None)
 			return;
 
@@ -99,6 +100,6 @@ public class SteamVR_TrackedObject : MonoBehaviour
 	{
 		if (System.Enum.IsDefined(typeof(EIndex), index))
 			this.index = (EIndex)index;
-	}
+    }
 }
 

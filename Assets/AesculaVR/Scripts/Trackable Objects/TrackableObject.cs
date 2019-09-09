@@ -14,17 +14,20 @@ public class TrackableObject : ObservableComponent
     /// <param name="editable"> Will components of the trackable objects be editable? </param>
     /// <returns></returns>
     public static IAction CreateFromMemento(TrackableObjectMemento memento, Transform parent, bool editable) => new CreateTrackableObjectFromMementoAction(memento,parent, editable);
-  
 
+    private IFile file;
     private List<Measure> measures;
+
+    public IFile SourceFile => file;
 
     protected void Awake()
     {
         this.measures = new List<Measure>();
     }
 
-    public void Setup(List<Measure> measures)
+    public void Setup(IFile source, List<Measure> measures)
     {
+        this.file = source;
         this.measures.AddRange(measures);
         NotifyObservers();
     }

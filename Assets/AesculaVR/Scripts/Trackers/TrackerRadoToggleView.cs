@@ -11,9 +11,10 @@ public class TrackerRadoToggleView : RadioToggle, IObserver
 {
     private MainManager mainManager;
 
-
+#pragma warning disable 0649
     [SerializeField] private Toggle prefab;
     [SerializeField] private Transform contentRoot;
+#pragma warning restore 0649
 
     #region Pooling
     private ObjectPool togglePool;

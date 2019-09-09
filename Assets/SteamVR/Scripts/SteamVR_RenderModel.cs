@@ -605,7 +605,8 @@ public class SteamVR_RenderModel : MonoBehaviour
 			UpdateModel();
 		}
 
-		deviceConnectedAction.enabled = true;
+        UpdateModel();
+        deviceConnectedAction.enabled = true;
 		hideRenderModelsAction.enabled = true;
 		modelSkinSettingsHaveChangedAction.enabled = true;
 	}
@@ -745,7 +746,7 @@ public class SteamVR_RenderModel : MonoBehaviour
 		this.index = (SteamVR_TrackedObject.EIndex)index;
 		modelOverride = "";
 
-		if (enabled)
+		if (enabled && gameObject.activeInHierarchy)
 		{
 			UpdateModel();
 		}

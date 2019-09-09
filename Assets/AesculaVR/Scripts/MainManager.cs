@@ -9,10 +9,13 @@ public class MainManager : MonoBehaviour
     private ActionManager           actionManager;
     private TrackableObjectManager  trackableObjectManager;
     private TrackerManager          trackerManager;
+    private ReplayManager           replayManager;
 
     public ActionManager            ActionManager           => actionManager;
     public TrackableObjectManager   TrackableObjectManager  => trackableObjectManager;
     public TrackerManager           TrackerManager          => trackerManager;
+    public ReplayManager            ReplayManager => replayManager;
+
 
     /// <summary>
     /// Get the MainManager from within the current scene.
@@ -40,6 +43,7 @@ public class MainManager : MonoBehaviour
         actionManager = new ActionManager();
         trackableObjectManager = new TrackableObjectManager();
         trackerManager = new TrackerManager();
+        replayManager = FindObjectOfType<ReplayManager>();
 
     }
 

@@ -75,8 +75,18 @@ public class VRControllerView : LateObserver
     /// </summary>
     private void Undo()
     {
-        if (editorManager.ActionManager.CanUndo())
-            editorManager.ActionManager.UndoAction();
+        if (editorManager)
+        {
+            if (editorManager.ActionManager.CanUndo())
+                editorManager.ActionManager.UndoAction();
+
+        }
+
+        if (mainManager)
+        {
+            if (mainManager.ActionManager.CanUndo())
+                mainManager.ActionManager.UndoAction();
+        }
     }
 
     /// <summary>
@@ -84,8 +94,16 @@ public class VRControllerView : LateObserver
     /// </summary>
     private void Redo()
     {
-        if (editorManager.ActionManager.CanRedo())
-            editorManager.ActionManager.RedoAction();
+        if (editorManager)
+        {
+            if (editorManager.ActionManager.CanRedo())
+                editorManager.ActionManager.RedoAction();
+        }
+        if (mainManager)
+        {
+            if (mainManager.ActionManager.CanRedo())
+                mainManager.ActionManager.RedoAction();
+        }
     }
 
 }

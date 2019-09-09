@@ -27,7 +27,7 @@ public class TrackableObjectManager : ObservableObject
             parent.name = file.Name(false);
 
             createAction = (CreateTrackableObjectFromMementoAction)TrackableObject.CreateFromMemento(memento, parent, false);
-            trackableObject.Setup(createAction.Measures);
+            trackableObject.Setup(file, createAction.Measures);
 
         }
 
@@ -51,6 +51,11 @@ public class TrackableObjectManager : ObservableObject
 
     private MainManager mainManager;
     private List<TrackableObject> trackableObjects;
+
+    public List<TrackableObject> TrackableObjects => new List<TrackableObject>(trackableObjects);
+    public List<TrackableObject> TrackableObjectsReference => (trackableObjects);
+
+
 
     public FileManager FileManager { get { return fileManager; } }
     private TrackableObjectFileManager fileManager;
