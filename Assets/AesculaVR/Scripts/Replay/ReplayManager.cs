@@ -68,7 +68,7 @@ public class ReplayManager : ObservableComponent
                     keyframes.Add((KeyFrame.Memento)recording.frames[i].SaveMemento());
             }
 
-        }        
+        }
 
         public void RestoreMemento(IMemento memento)
         {

@@ -9,17 +9,47 @@ public class KeyFrame : IPoolable, IMementoOriginator
 {
     public class TrackableObjectFrame : IPoolable, IMementoOriginator
     {
+
+        [System.Serializable]
+        public class MeasureFrame
+        {
+            [SerializeField] private int type;
+            [SerializeField] private Vector3 value;
+
+            public int Type => type;
+            public Vector3 Value => value;
+
+            public MeasureFrame(Measure measure)
+            {
+                if(measure is VectorMeasure)
+                    type = (int)VectorMeasure.Type;
+                else if (measure is PlaneMeasure)
+                    type = (int)PlaneMeasure.Type;
+                else
+                    type = (int)Measure.Type; //will throw an error.
+
+                this.value = measure.Value;
+            }
+        }
+
         private static int NullIndex => -1;
 
         private int index;
         private Vector3 position;
         private Vector3 rotation;
+        private List<MeasureFrame> measures;
 
-        public void SetUp(int index, Transform trackable)
+        public virtual void SetUp(int index, TrackableObject trackable)
         {
             this.index = index;
-            this.position = trackable.position;
-            this.rotation = trackable.rotation.eulerAngles;
+            this.position = trackable.transform.position;
+            this.rotation = trackable.transform.rotation.eulerAngles;
+
+            int count = trackable.MeasuresReference.Count;
+            this.measures = new List<MeasureFrame>(count);
+            for (int i = 0; i < count; i++)
+                this.measures.Add(new MeasureFrame(trackable.MeasuresReference[i]));
+
         }
 
         #region IPoolable
@@ -48,16 +78,19 @@ public class KeyFrame : IPoolable, IMementoOriginator
             [SerializeField] private int index;
             [SerializeField] private Vector3 position;
             [SerializeField] private Vector3 rotation;
+            [SerializeField] private List<MeasureFrame> measures;
 
             public int Index => index;
             public Vector3 Position => position;
             public Vector3 Rotation => rotation;
+            public List<MeasureFrame> Measures => measures;
 
             public Memento(TrackableObjectFrame frame)
             {
                 this.index = frame.index;
                 this.position = frame.position;
                 this.rotation = frame.rotation;
+                this.measures = new List<MeasureFrame>(frame.measures);
             }
         }
 
@@ -72,6 +105,11 @@ public class KeyFrame : IPoolable, IMementoOriginator
         }
         #endregion
 
+    }
+
+    public class TrackableObjectFrameWithMeasures : TrackableObjectFrame
+    {
+     
     }
 
     private class FramePool : ObjectPool
@@ -107,7 +145,7 @@ public class KeyFrame : IPoolable, IMementoOriginator
         for (int i = 0; i < trackableObjects.Count; i++)
         {
             TrackableObjectFrame frame = (TrackableObjectFrame)framePool.Pop();
-            frame.SetUp(i, trackableObjects[i].transform);
+            frame.SetUp(i, trackableObjects[i]);
             this.trackableObjects.Add(frame);
         }
 

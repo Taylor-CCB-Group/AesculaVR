@@ -19,6 +19,8 @@ public class TrackableObject : ObservableComponent
     private List<Measure> measures;
 
     public IFile SourceFile => file;
+    public List<Measure> Measures => new List<Measure>(measures);
+    public List<Measure> MeasuresReference => measures;
 
     protected void Awake()
     {
