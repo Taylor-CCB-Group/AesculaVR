@@ -21,11 +21,27 @@ public class CreateMeasureAction : IActionDereferenceable
     public CreateMeasureAction(MeasureManager.MeasureType type, Transform parent)
     {
 
-        measure = type == MeasureManager.MeasureType.Plane ?
-            (Measure)((GameObject)Resources.Load("MeasurePlane") ).GetComponent<PlaneMeasure >() :
-            (Measure)((GameObject)Resources.Load("MeasureVector")).GetComponent<VectorMeasure>() ;
+        Measure measure = null;
+        switch (type)
+        {
+            case MeasureManager.MeasureType.Plane:
+                measure = ((GameObject)Resources.Load("MeasurePlane")).GetComponent<PlaneMeasure>();
+                break;
+            case MeasureManager.MeasureType.Point:
+                measure = ((GameObject)Resources.Load("MeasurePoint")).GetComponent<PointMeasure>();
+                break;
+            case MeasureManager.MeasureType.Vector:
+                measure = ((GameObject)Resources.Load("MeasureVector")).GetComponent<VectorMeasure>();
+                Debug.Log(((GameObject)Resources.Load("MeasureVector")));
 
-        measure = GameObject.Instantiate(measure.gameObject).GetComponent<Measure>();
+                break;
+            default:
+                throw new System.NotSupportedException();
+        }
+
+
+        measure = GameObject.Instantiate(measure);
+
         measure.SetColor(new Color(Random.value, Random.value, Random.value));
 
         measure.transform.SetParent(parent);      
@@ -33,6 +49,8 @@ public class CreateMeasureAction : IActionDereferenceable
         measure.transform.rotation = Quaternion.identity;
 
         measure.SetManipulatablesEnabled(false);
+
+        this.measure = measure;
     }
 
     public virtual void DoAction() => measure.gameObject.SetActive(true);

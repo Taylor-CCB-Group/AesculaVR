@@ -50,6 +50,8 @@ public class DeviceManager : MonoBehaviour
 
         SetUpControllers();
         SetupTrackers();
+
+        StartCoroutine("ActivateTrackers");
     }
 
     /// <summary>
@@ -142,6 +144,17 @@ public class DeviceManager : MonoBehaviour
                 Debug.LogWarning("there're more tracker indexes then objects.");
             }
 
+        }
+    }
+
+    IEnumerator ActivateTrackers()
+    {
+        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForEndOfFrame();
+
+        for(int i = 0; i < trackers.Count; i++)
+        {
+            trackers[i].gameObject.SetActive(true);
         }
     }
 }

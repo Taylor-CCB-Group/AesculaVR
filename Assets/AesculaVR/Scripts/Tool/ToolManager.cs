@@ -130,7 +130,7 @@ public class ToolManager : ObservableComponent
         hand.ControllerEvents.TriggerClicked += (object sender, ControllerInteractionEventArgs e) => { TriggerDown(); };
         hand.ControllerEvents.TriggerUnclicked += (object sender, ControllerInteractionEventArgs e) => { TriggerUp(); };
 
-        hand.ControllerEvents.ButtonTwoPressed += (object sender, ControllerInteractionEventArgs e) => { ToggleMode(); };
+        hand.ControllerEvents.ButtonTwoReleased += (object sender, ControllerInteractionEventArgs e) => { ToggleMode(); };
     }
 
 

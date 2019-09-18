@@ -25,6 +25,8 @@ public class KeyFrame : IPoolable, IMementoOriginator
                     type = (int)VectorMeasure.Type;
                 else if (measure is PlaneMeasure)
                     type = (int)PlaneMeasure.Type;
+                else if (measure is PointMeasure)
+                    type = (int)PointMeasure.Type;
                 else
                     type = (int)Measure.Type; //will throw an error.
 

@@ -43,7 +43,16 @@ public class ObjectManager : ObservableObject, IObserver
     /// </summary>
     /// <param name="file">The file that contains the object we want to make. </param>
     /// <returns>The new Generate Object action</returns>
-    public IAction GenerateObject(IFile file) => new GenerateObjectAction(file, EditorManager.GetManager().TrackerManager.Main?.transform, true);
+    public IAction GenerateObject(IFile file)
+    {
+        Transform parent = EditorManager.GetManager().TrackerManager.Main?.transform;
+        GenerateObjectAction goa = new GenerateObjectAction(file, parent, true);
+
+        if(parent)
+            goa.GeneratedObject.transform.position = parent.position;
+
+        return goa;
+    }
 
     /// <summary>
     /// Create a Destroy Object action

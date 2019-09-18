@@ -12,22 +12,25 @@ public abstract class Measure : MonoBehaviour, IMementoOriginator, IPoolable
     public static MeasureManager.MeasureType Type => throw new System.NotSupportedException();
 
 #pragma warning disable 0649
-    [SerializeField] protected Manipulatable positionA, positionB;
+    [SerializeField] protected Manipulatable positionB;
+    [SerializeField] protected Manipulatable positionA;
 #pragma warning restore 0649
 
     protected Color color;
     public Color Color => color;
 
-    public Manipulatable PointA => positionA;
-    public Manipulatable PointB => positionB;
 
-    public Vector3 Value => (positionA.transform.position - positionB.transform.position);
+
+    public virtual Manipulatable PointB => positionB;
+    public virtual Manipulatable PointA => positionA;
+    public virtual Vector3 Value => (positionA.transform.position - positionB.transform.position);
+    
 
     /// <summary>
     /// Set weather or not the manlipulatable components on each point are enabled.
     /// </summary>
     /// <param name="value"> Are the manlipulatables enabled? </param>
-    public void SetManipulatablesEnabled(bool value)
+    public virtual void SetManipulatablesEnabled(bool value)
     {
         positionA.enabled = value;
         positionB.enabled = value;
@@ -52,48 +55,39 @@ public abstract class Measure : MonoBehaviour, IMementoOriginator, IPoolable
     {
 
         [SerializeField] public Vector3 a, b;
-        [SerializeField] public Vector3 rotation, position;
+        [SerializeField] public Vector3 position, rotation;
         [SerializeField] public int type;
-        
+
         public Memento(Measure measure)
         {
-            this.rotation = measure.transform.localRotation.eulerAngles;
             this.position = measure.transform.localPosition;
+            this.rotation = measure.transform.localRotation.eulerAngles;
 
-            this.a = measure.positionA.transform.localPosition;
-            this.b = measure.positionB.transform.localPosition;
-
-          
+            this.a = measure.PointA.transform.localPosition;
+            this.b = measure.PointB.transform.localPosition;
             this.type = -1;
         }
-
+             
     }
 
-    public abstract IMemento SaveMemento();
+    public virtual IMemento SaveMemento() => new Memento(this);
 
     public void RestoreMemento(IMemento memento)
     {
         Memento m = (Memento)memento;
-  
-        this.transform.localRotation = Quaternion.Euler(m.rotation);
         this.transform.localPosition = m.position;
+        this.transform.localRotation = Quaternion.Euler(m.rotation);
 
-        this.positionA.transform.localPosition = m.a;
-        this.positionB.transform.localPosition = m.b;
-
-       
-        
+        this.PointA.transform.localPosition = m.a;
+        this.PointB.transform.localPosition = m.b;        
     }
 
 
     #endregion
 
     #region IPoolable
-
     public void OnPoppedFromPool()
     {
-        //assuming A,B are children, [ and concrete gameobjects ].
-
         this.gameObject.SetActive(false);
         this.gameObject.hideFlags = HideFlags.HideInHierarchy;
     }
@@ -101,8 +95,8 @@ public abstract class Measure : MonoBehaviour, IMementoOriginator, IPoolable
     public void OnPushedToPool()
     {
         this.gameObject.hideFlags = HideFlags.None;
-        this.gameObject.SetActive(true);      
+        this.gameObject.SetActive(true);
     }
-    
     #endregion
+
 }

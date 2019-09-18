@@ -11,7 +11,7 @@ public class CreateMeasureTool : ITool
 
     private Transform tip => editorManager.ToolManager.Tip;
     private Measure measure => createMeasureAction.Measure;
-    private Transform movableMeasurePoint => measure.PointB.transform;
+    private Transform movableMeasurePoint => ((Measure)measure).PointB.transform;
 
     private Sprite icon;
 
@@ -19,9 +19,24 @@ public class CreateMeasureTool : ITool
     {
         editorManager = EditorManager.GetManager();
         this.type = type;
-        icon = (type == MeasureManager.MeasureType.Vector) ?
-            (Sprite)Resources.Load<Sprite>("Icons/CreateVector") :
-            (Sprite)Resources.Load<Sprite>("Icons/CreatePlane" ) ;
+        icon = null;
+
+        switch (type)
+        {
+            case MeasureManager.MeasureType.Plane:
+                icon = (Sprite)Resources.Load<Sprite>("Icons/CreatePlane");
+                break;
+            case MeasureManager.MeasureType.Vector:
+                icon = (Sprite)Resources.Load<Sprite>("Icons/CreateVector");
+                break;
+            case MeasureManager.MeasureType.Point:
+                icon = (Sprite)Resources.Load<Sprite>("Icons/CreatePoint");
+                break;
+            default:
+                throw new System.NotSupportedException();
+
+        }
+
     }
 
     #region ITool
@@ -43,10 +58,9 @@ public class CreateMeasureTool : ITool
     public void TriggerDown()
     {
         createMeasureAction = new CreateEditableMeasureAction(type, editorManager.TrackerManager.Main.transform);
-
-        createMeasureAction.Measure.PointA.transform.position = tip.transform.position;
-        createMeasureAction.Measure.PointB.transform.position = tip.transform.position;
-
+        measure.PointA.transform.position = tip.transform.position;        
+        if (measure is Measure)
+            ((Measure)measure).PointB.transform.position = tip.transform.position;
         createMeasureAction.DoAction();
     }
 
@@ -59,7 +73,8 @@ public class CreateMeasureTool : ITool
 
     public void TriggerUpdate()
     {
-        movableMeasurePoint.position = tip.position;
+        if (measure is Measure)
+            movableMeasurePoint.position = tip.position;
     }
 
     public Sprite Icon() => icon;

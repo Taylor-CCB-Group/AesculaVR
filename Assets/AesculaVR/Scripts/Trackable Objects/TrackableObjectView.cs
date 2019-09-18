@@ -7,7 +7,7 @@ public class TrackableObjectView : FileBrowserView
     public FileManager FileManager => mainManager.TrackableObjectManager.FileManager;
 
 #pragma warning disable 0649
-    [SerializeField] private TrackerRadoToggleView trackersToggle;
+    [SerializeField] private TrackerRadioToggleView trackersToggle;
 #pragma warning restore 0649
     private MainManager mainManager;
 

@@ -228,6 +228,13 @@ public class ManipulatableManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Gets the manlipulatable object under the tip of the right controller.
+    /// </summary>
+    /// <param name="getManipulatableFromAncestors">Do we want to get the manipulatable object from objects ancestors.</param>
+    /// <returns></returns>
+    public Manipulatable GetManipulatableUnderRightController(bool getManipulatableFromAncestors = true) => GetSelectedTarget(right, getManipulatableFromAncestors);
+  
+    /// <summary>
     /// end a manlipulation
     /// </summary>
     /// <param name="inputManager"> the input manager we want to end the manlipulation on</param>

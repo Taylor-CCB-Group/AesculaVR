@@ -7,13 +7,15 @@ using UnityEngine;
 /// </summary>
 public class TrackerManager : ObservableObject
 {
-    private List<Tracker> trackers;
-    private HashSet<Tracker> trackersHash;
+    protected List<Tracker> trackers;
+    protected HashSet<Tracker> trackersHash;
 
     public List<Tracker> Trackers { get { return new List<Tracker>(trackers); } }
     public List<Tracker> TrackersReference { get { return trackers; } }
     
-    public Tracker Main { get { return (trackers.Count > 0) ? trackers[0] : null;} }
+    public Tracker Main { get { return (trackers.Count > 0) ? trackers[mainTrackerIndex] : null;} }
+
+    protected int mainTrackerIndex = 0;
 
     public TrackerManager()
     {
@@ -21,7 +23,7 @@ public class TrackerManager : ObservableObject
         trackersHash = new HashSet<Tracker>();
     }
 
-    public void Add(Tracker tracker)
+    public virtual void Add(Tracker tracker)
     {
         Debug.Log("adding tracker.");
 
@@ -34,7 +36,7 @@ public class TrackerManager : ObservableObject
         NotifyObservers();
     }
 
-    public void Remove(Tracker tracker)
+    public virtual void Remove(Tracker tracker)
     {
         if (!trackersHash.Contains(tracker))
             return;

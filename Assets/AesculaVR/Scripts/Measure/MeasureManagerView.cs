@@ -63,7 +63,21 @@ public class MeasureManagerView : LateObserver
     /// <param name="unused"></param>
     private void SetTool(int unused)
     {
-        MeasureManager.MeasureType type = planeOrVectorToggle.Value == 0 ? MeasureManager.MeasureType.Plane : MeasureManager.MeasureType.Vector;
+        MeasureManager.MeasureType type;
+        switch (planeOrVectorToggle.Value)
+        {
+            case 0:
+                type = MeasureManager.MeasureType.Plane;
+                break;
+            case 1:
+                type = MeasureManager.MeasureType.Vector;
+                break;
+            case 2:
+                type = MeasureManager.MeasureType.Point;
+                break;
+            default:
+                throw new System.NotImplementedException();
+        }
         editorManager.MeasureManager.SetToolToCreateMeasure(type);
     }
 

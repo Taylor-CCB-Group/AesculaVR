@@ -26,14 +26,14 @@ public class EditorManager : MonoBehaviour
     private ObjectManager                objectManager;
     private ActionManager                actionManager;
     private TrackableObjectEditorManager trackableObjectManager;
-    private TrackerManager               trackerManager;
+    private EditorTrackerManager trackerManager;
     private MeasureManager               measureManager;
     private ToolManager                  toolManager;
     private ManipulatableManager         manipulatableManager;
 
     public ObjectManager                ObjectManager   => objectManager;
     public ActionManager                ActionManager   => actionManager;
-    public TrackerManager               TrackerManager  => trackerManager;
+    public EditorTrackerManager         TrackerManager  => trackerManager;
     public MeasureManager               MeasureManager  => measureManager;
     public ToolManager                  ToolManager     => toolManager;
     public TrackableObjectEditorManager TrackableObjectManager  => trackableObjectManager;
@@ -50,7 +50,7 @@ public class EditorManager : MonoBehaviour
         objectManager = new ObjectManager();
         actionManager = new ActionManager();
         trackableObjectManager = new TrackableObjectEditorManager(this);
-        trackerManager = new TrackerManager();
+        trackerManager = new EditorTrackerManager();
         measureManager = new MeasureManager();
 
         toolManager          = GameObject.FindObjectOfType<ToolManager>();
@@ -58,4 +58,5 @@ public class EditorManager : MonoBehaviour
         
     }
 
+    //object manager and measureManager should be under trackableObjectManager
 }

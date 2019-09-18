@@ -45,6 +45,16 @@ public class MeasureView : MonoBehaviour, IPoolable
         this.backgroundColor.color = backgroundColor;
 
         this.type.SetText((measure is VectorMeasure) ? "Vector" : "Plane");
+
+        if (measure is VectorMeasure)
+            this.type.SetText("Vector");
+        else if (measure is PlaneMeasure)
+            this.type.SetText("Plane");
+        else if (measure is PointMeasure)
+            this.type.SetText("Point");
+        else
+            this.type.SetText(defaultString);
+
         this.color.color = measure.Color;
         this.direction.SetText(measure.Value.normalized.ToString());
         

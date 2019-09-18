@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MeasureManager : ObservableObject
 {
-    public enum MeasureType { Plane, Vector }
+    public enum MeasureType { Plane, Vector, Point }
 
     private List<Measure> measures;
     private EditorManager editorManager;

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// <summary>
 /// A radio view just to select a tracker
 /// </summary>
-public class TrackerRadoToggleView : RadioToggle, IObserver
+public class TrackerRadioToggleView : RadioToggle, IObserver
 {
     private MainManager mainManager;
 
