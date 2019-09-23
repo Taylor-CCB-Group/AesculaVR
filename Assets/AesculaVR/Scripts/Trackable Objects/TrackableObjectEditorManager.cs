@@ -2,8 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrackableObjectEditorManager : IMementoOriginator
+public class TrackableObjectEditorManager : ObservableObject, IMementoOriginator
 {
+
+    public class EditableTrackableObject
+    {
+        private ObjectManager objectManager;
+        private MeasureManager measureManager;
+
+        public ObjectManager  ObjectManager  => objectManager;
+        public MeasureManager MeasureManager => measureManager;
+
+        public EditableTrackableObject()
+        {
+            this.objectManager  = new ObjectManager();
+            this.measureManager = new MeasureManager();
+        }
+
+    }
+
+    private Dictionary<Tracker,EditableTrackableObject> trackableObjects;
+    public EditableTrackableObject SelectedObject
+    {
+        get
+        {
+            //get the value if it exists, if it does not; delete it.
+            Tracker tracker = editorManager.TrackerManager.Main;
+            if (tracker == null)
+                return nullTracker;
+
+
+            EditableTrackableObject obj;
+            if (trackableObjects.TryGetValue(tracker, out obj))
+                return obj;
+
+            obj = new EditableTrackableObject();
+            trackableObjects.Add(editorManager.TrackerManager.Main, obj);
+            return obj;
+        }
+    }
+
     /// <summary>
     /// The file manager for trackable objects.
     /// </summary>
@@ -11,11 +49,14 @@ public class TrackableObjectEditorManager : IMementoOriginator
     private TrackableObjectFileManager fileManager;
 
     private EditorManager editorManager;
+    private EditableTrackableObject nullTracker;
 
     public TrackableObjectEditorManager(EditorManager editorManager)
     {
         fileManager = new TrackableObjectFileManager();
         this.editorManager = editorManager;
+        this.trackableObjects = new Dictionary<Tracker, EditableTrackableObject>();
+        this.nullTracker = new EditableTrackableObject();
     }
 
 

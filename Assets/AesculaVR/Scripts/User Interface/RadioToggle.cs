@@ -42,16 +42,26 @@ public class RadioToggle : ObservableComponent
     /// Set an index to be active.
     /// </summary>
     /// <param name="value">The index to set</param>
-    public void SetActive(int value)
+    public virtual void SetActive(int value)
     {
-        activeIndex = value;
-
-        for (int i = 0; i < toggles.Count; i++)
-            toggles[i].SetIsOnWithoutNotify((i == activeIndex));  
+        SetActiveWithoutNotify(value);
 
         onValueChanged.Invoke(activeIndex);
         NotifyObservers();
     }
+
+    public void SetActiveWithoutNotify(int value)
+    {
+        activeIndex = value;
+
+        for (int i = 0; i < toggles.Count; i++)
+        {
+            toggles[i].SetIsOnWithoutNotify((i == activeIndex));
+            toggles[i].graphic.enabled = i == activeIndex;
+
+        }
+    }
+
 
     protected virtual void Awake()
     {
@@ -81,6 +91,15 @@ public class RadioToggle : ObservableComponent
         toggles[i].onValueChanged.AddListener(valueChangeAction(i));
 
         
+    }
+
+
+    public void RemoveToggle(Toggle toggle)
+    {
+        toggles.Remove(toggle);
+        toggle.onValueChanged.RemoveAllListeners();
+
+
     }
 
     private UnityAction<bool> valueChangeAction(int i) => new UnityAction<bool>((bool v) => { SetActive(i); });
