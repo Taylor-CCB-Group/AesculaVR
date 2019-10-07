@@ -21,7 +21,7 @@ public struct MoveAction : IAction
 
     void IAction.DoAction()
     {
-        target.transform.position = endPosition;
+        target.transform.localPosition = endPosition;
         target.OnTransformation();
     }
 
@@ -32,7 +32,7 @@ public struct MoveAction : IAction
 
     void IAction.UndoAction()
     {
-        target.transform.position = startPosition;
+        target.transform.localPosition = startPosition;
         target.OnTransformation();
     }
 }

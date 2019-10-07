@@ -78,6 +78,10 @@ public class RadioToggle : ObservableComponent
         }
     }
 
+    /// <summary>
+    /// Add a toggle.
+    /// </summary>
+    /// <param name="toggle">The toggle to add.</param>
     public void AddToggle(Toggle toggle)
     {
         toggles.Add(toggle);
@@ -93,7 +97,10 @@ public class RadioToggle : ObservableComponent
         
     }
 
-
+    /// <summary>
+    /// remove a toggle
+    /// </summary>
+    /// <param name="toggle">the toggle to remove.</param>
     public void RemoveToggle(Toggle toggle)
     {
         toggles.Remove(toggle);

@@ -33,6 +33,11 @@ public class TrackableObjectEditorView : FileBrowserView
         saveBtn.onClick.AddListener(Save);
     }
 
+    public void OnEnable()
+    {
+        LateNotify(null,null);
+    }
+
     protected override FileManager GetFileManager() => trackableObjectManager.FileManager;
 
     public override void SetupFileView(FileView view, IFile file, Color color)

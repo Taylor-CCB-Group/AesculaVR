@@ -32,8 +32,9 @@ public class CreateMeasureAction : IActionDereferenceable
                 break;
             case MeasureManager.MeasureType.Vector:
                 measure = ((GameObject)Resources.Load("MeasureVector")).GetComponent<VectorMeasure>();
-                Debug.Log(((GameObject)Resources.Load("MeasureVector")));
-
+                break;
+            case MeasureManager.MeasureType.TriangularPlane:
+                measure = ((GameObject)Resources.Load("MeasureTriangularPlane")).GetComponent<TriangularPlaneMeasure>();
                 break;
             default:
                 throw new System.NotSupportedException();

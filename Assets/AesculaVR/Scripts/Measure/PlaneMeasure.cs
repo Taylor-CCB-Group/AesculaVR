@@ -2,15 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A measure for getting a normal to a plane.
+/// </summary>
 public class PlaneMeasure : Measure
 {
 
     public new static MeasureManager.MeasureType Type => MeasureManager.MeasureType.Plane;
 
+    public override Vector3 Value => (points[0].transform.position - points[1].transform.position).normalized;
+
+    public override  Manipulatable PointB => points[1];
+
 #pragma warning disable 0649
     [SerializeField] private GameObject quad = null;
     [SerializeField] private GameObject quad2 = null;
 #pragma warning restore 0649
+
+    private void Awake()
+    {
+        Debug.Assert(points.Count == 2);
+    }
 
     private void LateUpdate()
     {
@@ -22,8 +34,8 @@ public class PlaneMeasure : Measure
     /// </summary>
     void QuadFacePoint()
     {
-        this.quad.transform.LookAt(positionB.transform);
-        this.quad.transform.position = (positionA.transform.position + positionB.transform.position) / 2;
+        this.quad.transform.LookAt(points[1].transform);
+        this.quad.transform.position = (points[0].transform.position + points[1].transform.position) / 2;
     }
 
     public override void SetColor(Color color)

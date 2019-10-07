@@ -17,7 +17,7 @@ public class EditorTrackerManager : TrackerManager
 
         this.mainTrackerIndex = index;
 
-        if(notifyObservers)
+        //if(notifyObservers)
             NotifyObservers();
     }
 
@@ -26,8 +26,10 @@ public class EditorTrackerManager : TrackerManager
         int trackerIndex = trackers.IndexOf(tracker);
         if (mainTrackerIndex >= trackers.Count - 1)
             mainTrackerIndex = (trackers.Count ==1) ? 0 : trackers.Count - 2;
+
         
         base.Remove(tracker);
+        NotifyObservers();
     }
 
 }

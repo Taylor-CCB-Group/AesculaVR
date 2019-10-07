@@ -54,7 +54,13 @@ public class MeasureManagerView : LateObserver
     private void Start()
     {
         planeOrVectorToggle.onValueChanged.AddListener(SetTool);
-        editorManager.MeasureManager.AddObserver(this);
+        
+        editorManager.TrackerManager.AddObserver(this);
+    }
+
+    public void OnEnable()
+    {
+        Notify(null, null);
     }
 
     /// <summary>
@@ -75,6 +81,9 @@ public class MeasureManagerView : LateObserver
             case 2:
                 type = MeasureManager.MeasureType.Point;
                 break;
+            case 3:
+                type = MeasureManager.MeasureType.TriangularPlane;
+                break;
             default:
                 throw new System.NotImplementedException();
         }
@@ -83,6 +92,8 @@ public class MeasureManagerView : LateObserver
 
     public override void LateNotify(object Sender, EventArgs args)
     {
+        editorManager.MeasureManager.AddObserver(this);
+
         Debug.Log("PlaneVectorView =>  LateNotify");
         List<Measure> measures = editorManager.MeasureManager.Measures;
 

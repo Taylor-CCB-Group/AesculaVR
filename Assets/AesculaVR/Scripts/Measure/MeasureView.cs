@@ -52,6 +52,8 @@ public class MeasureView : MonoBehaviour, IPoolable
             this.type.SetText("Plane");
         else if (measure is PointMeasure)
             this.type.SetText("Point");
+        else if (measure is TriangularPlaneMeasure)
+            this.type.SetText("Triangular Plane");
         else
             this.type.SetText(defaultString);
 

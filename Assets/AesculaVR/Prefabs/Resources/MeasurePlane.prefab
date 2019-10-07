@@ -445,7 +445,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f59306926010749931d4255c441ded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionA: {fileID: 258139816289042337}
-  positionB: {fileID: 1070850254582150059}
+  points:
+  - {fileID: 258139816289042337}
+  - {fileID: 1070850254582150059}
   quad: {fileID: 6618878142664718576}
   quad2: {fileID: 6210629584047124537}

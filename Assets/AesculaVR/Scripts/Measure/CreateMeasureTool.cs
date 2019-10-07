@@ -32,6 +32,9 @@ public class CreateMeasureTool : ITool
             case MeasureManager.MeasureType.Point:
                 icon = (Sprite)Resources.Load<Sprite>("Icons/CreatePoint");
                 break;
+            case MeasureManager.MeasureType.TriangularPlane:
+                icon = (Sprite)Resources.Load<Sprite>("Icons/CreateTriangularPlane");
+                break;
             default:
                 throw new System.NotSupportedException();
 
@@ -59,8 +62,7 @@ public class CreateMeasureTool : ITool
     {
         createMeasureAction = new CreateEditableMeasureAction(type, editorManager.TrackerManager.Main.transform);
         measure.PointA.transform.position = tip.transform.position;        
-        if (measure is Measure)
-            ((Measure)measure).PointB.transform.position = tip.transform.position;
+        measure.PointB.transform.position = tip.transform.position;
         createMeasureAction.DoAction();
     }
 
@@ -73,8 +75,22 @@ public class CreateMeasureTool : ITool
 
     public void TriggerUpdate()
     {
-        if (measure is Measure)
-            movableMeasurePoint.position = tip.position;
+        movableMeasurePoint.position = tip.position;
+
+        if(measure is TriangularPlaneMeasure)
+        {
+            //as we point b, we move point c to keep triangluar shape during setup.
+            TriangularPlaneMeasure tpm = (TriangularPlaneMeasure)measure;
+
+            Vector3 midPointAB = (tpm.PointA.transform.localPosition + (tpm.PointB.transform.localPosition - tpm.PointA.transform.localPosition) * .5f);
+            Vector3 per = Vector3.Cross(midPointAB, Vector3.up).normalized;
+            float dis = Vector3.Distance(tpm.PointA.transform.localPosition, tpm.PointB.transform.localPosition);
+
+            dis = (dis / 2) / Mathf.Tan(60 * Mathf.Deg2Rad);
+
+            tpm.PointC.transform.localPosition = midPointAB + (per * dis);
+
+        }
     }
 
     public Sprite Icon() => icon;

@@ -29,7 +29,11 @@ public class CreateTrackableObjectFromMementoAction : IAction
             CreateMeasureAction createMeasureAction = (editable) ?
                 new CreateEditableMeasureAction((MeasureManager.MeasureType)memento.measures[i].type, parent) :
                 new CreateMeasureAction((MeasureManager.MeasureType)memento.measures[i].type, parent);
-            createMeasureAction.Measure.RestoreMemento(memento.measures[i]);
+
+            if(memento.measures[i].type == (int)MeasureManager.MeasureType.TriangularPlane)
+                createMeasureAction.Measure.RestoreMemento(memento.measures[i] as TriangularPlaneMeasure.Memento);
+            else
+                createMeasureAction.Measure.RestoreMemento(memento.measures[i]);
 
             measures.Add(createMeasureAction.Measure);
             actions.Add(createMeasureAction);

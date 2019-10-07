@@ -21,7 +21,7 @@ public struct RotateAction : IAction
 
     void IAction.DoAction()
     {
-        target.transform.rotation = Quaternion.Euler(endRotationEuler);
+        target.transform.localRotation = Quaternion.Euler(endRotationEuler);
         target.OnTransformation();
     }
 
@@ -32,7 +32,7 @@ public struct RotateAction : IAction
 
     void IAction.UndoAction()
     {
-        target.transform.rotation = Quaternion.Euler(startRotationEuler);
+        target.transform.localRotation = Quaternion.Euler(startRotationEuler);
         target.OnTransformation();
     }
 }

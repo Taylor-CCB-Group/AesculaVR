@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// A Radio toggle for selecting a tracker.
+/// </summary>
 public class TrackerRadioToggle : RadioToggle, IObserver
 {
 
@@ -37,6 +40,19 @@ public class TrackerRadioToggle : RadioToggle, IObserver
     }
     #endregion
 
+
+    public override void SetActive(int value)
+    {
+        if (editorManager)
+            editorManager.ActionManager.DoAction(new SetTrackerAction(this, value, this.activeIndex));
+        else if (mainManager)
+            mainManager.ActionManager.DoAction(new SetTrackerAction(this, value, this.activeIndex));
+        else
+            throw new System.Exception();
+    }
+
+    public void SetActiveBase(int value) => base.SetActive(value);
+  
 
     private TrackerManager GetTrackerManager()
     {
@@ -112,7 +128,10 @@ public class TrackerRadioToggle : RadioToggle, IObserver
         SetActiveWithoutNotify(newActiveValue);
     }
 
-    
+    public void OnEnable()
+    {
+        Notify(null, null);
+    }
 
     protected override void Awake()
     {
@@ -138,6 +157,9 @@ public class TrackerRadioToggle : RadioToggle, IObserver
         SetActiveWithoutNotify(Value);
     }
 
+    /// <summary>
+    /// The selected tracker.
+    /// </summary>
     public Tracker Tracker => GetTrackerManager().Trackers[Value];
 
 }

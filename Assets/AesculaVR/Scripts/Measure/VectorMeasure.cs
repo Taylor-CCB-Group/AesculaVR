@@ -2,16 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// A measure for measuring a direction
+/// </summary>
 public class VectorMeasure : Measure, IMementoOriginator
 {
 
     public new static MeasureManager.MeasureType Type => MeasureManager.MeasureType.Vector;
+
+    public override Vector3 Value => (points[0].transform.position - points[1].transform.position).normalized;
+    public override Manipulatable PointB => points[1];
 
 #pragma warning disable 0649
     [SerializeField] private GameObject link;
 #pragma warning restore 0649
 
     private const float linkScale = 0.25f;
+
+    private void Awake()
+    {
+        Debug.Assert(points.Count == 2);
+    }
 
     private void LateUpdate()
     {
@@ -26,8 +38,8 @@ public class VectorMeasure : Measure, IMementoOriginator
         //this was ripped from bable VR.
 
         //get the positions.
-        Vector3 pa = positionA.transform.position;
-        Vector3 pb = positionB.transform.position;
+        Vector3 pa = points[0].transform.position;
+        Vector3 pb = points[1].transform.position;
 
         //get the position between the two points.
         Vector3 pos = Vector3.zero;
@@ -50,8 +62,8 @@ public class VectorMeasure : Measure, IMementoOriginator
         pos[2] = (smallestPoint).magnitude;
 
         //get the smallest point
-        pa = positionA.transform.lossyScale;
-        pb = positionB.transform.lossyScale;
+        pa = points[0].transform.lossyScale;
+        pb = points[1].transform.lossyScale;
         smallestPoint = (pa.sqrMagnitude < pb.sqrMagnitude) ? pa : pb;
 
         //set the cross section of the link to be propotional to the smallest point.
@@ -59,7 +71,7 @@ public class VectorMeasure : Measure, IMementoOriginator
         pos[1] = smallestPoint[1] * linkScale;
 
         link.transform.localScale = pos;
-        link.transform.LookAt(positionB.transform);
+        link.transform.LookAt(points[1].transform);
     }
 
     public override void SetColor(Color color)

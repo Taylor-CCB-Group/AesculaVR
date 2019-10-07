@@ -23,9 +23,9 @@ namespace AesculaVR.Manipulations
         {
 
             this.orginalParent = Manipulatable.transform.parent;
-            this.startPosition = Manipulatable.transform.position;
+            this.startPosition = Manipulatable.transform.localPosition;
             this.startScale = Manipulatable.transform.localScale;
-            this.startRotation = Manipulatable.transform.rotation.eulerAngles;
+            this.startRotation = Manipulatable.transform.localRotation.eulerAngles;
 
             this.primaryStartPos = primary.Tip.position;
             this.secondaryStartPos = secondary.Tip.position;
@@ -56,14 +56,14 @@ namespace AesculaVR.Manipulations
         {
             base.End();
 
-            Vector3 worldRotation = Manipulatable.transform.rotation.eulerAngles;
+            Vector3 localRotation = Manipulatable.transform.localRotation.eulerAngles;
             Manipulatable.transform.SetParent(orginalParent);
 
             EditorManager.ActionManager.DoAction(new CompoundAction(new IAction[]
             {
                 new ScaleAction(Manipulatable, startScale, Manipulatable.transform.localScale),
-                new MoveAction (Manipulatable, startPosition, Manipulatable.transform.position),
-                new RotateAction (Manipulatable, startRotation, worldRotation)
+                new MoveAction (Manipulatable, startPosition, Manipulatable.transform.localPosition),
+                new RotateAction (Manipulatable, startRotation, localRotation)
             }, "Move, Scale and rotate an object."));
         }
     }

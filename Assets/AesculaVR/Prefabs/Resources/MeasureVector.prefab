@@ -244,8 +244,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a9a02295d45fbf48a670931a657ca0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionA: {fileID: 4480722071801585832}
-  positionB: {fileID: 401066972124845810}
+  points:
+  - {fileID: 4480722071801585832}
+  - {fileID: 401066972124845810}
   link: {fileID: 1082605274694350762}
 --- !u!1 &9119481305966865519
 GameObject:

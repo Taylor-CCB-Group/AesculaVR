@@ -150,5 +150,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 152cbc1421789a543a8e379bfc5c7bfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionB: {fileID: 2307006614299542212}
-  positionA: {fileID: 2307006614299542212}
+  points:
+  - {fileID: 2307006614299542212}

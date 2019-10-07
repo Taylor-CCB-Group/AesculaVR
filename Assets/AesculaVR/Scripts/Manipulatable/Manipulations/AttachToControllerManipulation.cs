@@ -17,8 +17,8 @@ namespace AesculaVR.Manipulations
 
         public AttachToControllerManipulation(InputManager primary, InputManager secondary, Manipulatable manipulatable) : base(primary, secondary, manipulatable)
         {
-            this.startPosition = Manipulatable.transform.position;
-            this.startRotation = Manipulatable.transform.rotation.eulerAngles;
+            this.startPosition = Manipulatable.transform.localPosition;
+            this.startRotation = Manipulatable.transform.localRotation.eulerAngles;
             this.orginalParent = Manipulatable.transform.parent;
             Manipulatable.transform.SetParent(primary.Children);
         }
@@ -30,8 +30,8 @@ namespace AesculaVR.Manipulations
             base.End();
             Manipulatable.transform.SetParent(orginalParent);
             EditorManager.ActionManager.DoAction(new CompoundAction(new IAction[] {
-                new MoveAction(Manipulatable,startPosition,Manipulatable.transform.position),
-                new RotateAction(Manipulatable,startRotation, Manipulatable.transform.rotation.eulerAngles)
+                new MoveAction(Manipulatable,startPosition,Manipulatable.transform.localPosition),
+                new RotateAction(Manipulatable,startRotation, Manipulatable.transform.localRotation.eulerAngles)
             }, "Move and rotate a   object"), true);
         }
     }

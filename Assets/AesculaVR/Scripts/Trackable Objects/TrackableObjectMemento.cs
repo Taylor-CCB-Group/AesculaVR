@@ -29,7 +29,7 @@ public class TrackableObjectMemento : IMemento
         this.measures = new List<Measure.Memento>(measures.Count);
         for (int i = 0; i < measures.Count; i++)
         {
-            this.measures.Add((Measure.Memento)measures[i].SaveMemento());
+                this.measures.Add((Measure.Memento)measures[i].SaveMemento());
         }
 
     }

@@ -1183,7 +1183,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'Anteversion '
+  m_text: 'Value A:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1252,10 +1252,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 122998684}
-    characterCount: 12
+    characterCount: 8
     spriteCount: 0
     spaceCount: 1
-    wordCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -6680,9 +6680,10 @@ GameObject:
   - component: {fileID: 621612228}
   - component: {fileID: 621612227}
   - component: {fileID: 621612226}
+  - component: {fileID: 621612230}
   - component: {fileID: 621612225}
   m_Layer: 5
-  m_Name: Canvas (1)
+  m_Name: Display Values
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6697,20 +6698,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 621612224}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 812713915096a494aa432690ad2ac006, type: 3}
+  m_Script: {fileID: 11500000, guid: c247b68ea369f1b46b70f2f20a43173d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isUpdating: 0
   useProjection: 1
   invertAngle: 0
-  boneObjectIndex: 0
-  impactorObjectIndex: 0
-  impactorVectorIndex: 0
-  boneVectorIndex: 0
-  boneAnterversionPlaneIndex: 0
-  boneInclinationPlaneIndex: 0
-  anterversionText: {fileID: 1418551165}
-  inclinationText: {fileID: 1661970334}
+  offset: 0
+  directionA:
+    objectIndex: 0
+    measureIndex: 0
+  directionB:
+    objectIndex: 0
+    measureIndex: 0
+  projectionPlane:
+    objectIndex: 0
+    measureIndex: 0
+  uiOutput: {fileID: 1661970334}
 --- !u!114 &621612226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6791,6 +6795,32 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &621612230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621612224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c247b68ea369f1b46b70f2f20a43173d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUpdating: 0
+  useProjection: 1
+  invertAngle: 0
+  offset: 0
+  directionA:
+    objectIndex: 0
+    measureIndex: 0
+  directionB:
+    objectIndex: 0
+    measureIndex: 0
+  projectionPlane:
+    objectIndex: 0
+    measureIndex: 0
+  uiOutput: {fileID: 1516622489}
 --- !u!1 &632226768
 GameObject:
   m_ObjectHideFlags: 0
@@ -11919,7 +11949,7 @@ MonoBehaviour:
   errorDialog: {fileID: 943842566}
   sortByDropdown: {fileID: 1623886909}
   orderByDropdown: {fileID: 995424497}
-  trackersToggle: {fileID: 0}
+  trackersToggle: {fileID: 951139207}
 --- !u!114 &1142778264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14916,7 +14946,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'Inclination '
+  m_text: 'Value B:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -14985,10 +15015,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1418551165}
-    characterCount: 12
+    characterCount: 8
     spriteCount: 0
     spaceCount: 1
-    wordCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -19490,8 +19520,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggles: []
-  activeIndex: -1
-  mainManager: {fileID: 0}
   prefab: {fileID: 5611470704679035203, guid: 436c808d9ad174d47be4403675c400a8, type: 3}
   contentRoot: {fileID: 1864302723}
 --- !u!114 &1864302725
