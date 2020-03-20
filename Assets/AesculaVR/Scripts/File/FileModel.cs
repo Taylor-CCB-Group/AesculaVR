@@ -65,6 +65,8 @@ public class FileModel : ObservableObject, IFileSortable
     /// <param name="directory"> the directory we want to look at. </param>
     public FileModel(string directory) : base()
     {
+        CreateDirectory(directory);
+
         this.files = new List<IFile>();
 
         this.directory = directory;
@@ -84,6 +86,8 @@ public class FileModel : ObservableObject, IFileSortable
     /// <param name="sortDirection"> The direction we want to sort by. </param>
     public FileModel(string directory, FileSorter.SortBy sortField, FileSorter.SortDirection sortDirection) : base()
     {
+        CreateDirectory(directory);
+
         this.files = new List<IFile>();
 
         this.directory = directory;
@@ -102,6 +106,8 @@ public class FileModel : ObservableObject, IFileSortable
     /// <param name="extension">The extension we want to track.</param>
     public FileModel(string directory, string extension) : base()
     {
+        CreateDirectory(directory);
+
         this.files = new List<IFile>();
 
         this.directory = directory;
@@ -122,6 +128,8 @@ public class FileModel : ObservableObject, IFileSortable
     /// <param name="sortDirection">the sort direction</param>
     public FileModel(string directory, string extension, FileSorter.SortBy sortField, FileSorter.SortDirection sortDirection) : base()
     {
+        CreateDirectory(directory);
+
         this.files = new List<IFile>();
 
         this.directory = directory;
@@ -133,4 +141,16 @@ public class FileModel : ObservableObject, IFileSortable
         Refresh();
     }
 
+    /// <summary>
+    /// Creates the directory if it does not already exist.
+    /// </summary>
+    /// <param name="directory">The directory to create.</param>
+    private void CreateDirectory(string directory)
+    {
+        if (System.IO.Directory.Exists(directory))
+            return;
+
+        CreateDirectory(System.IO.Directory.GetDirectoryRoot(directory));
+        System.IO.Directory.CreateDirectory(directory);
+    }
 }

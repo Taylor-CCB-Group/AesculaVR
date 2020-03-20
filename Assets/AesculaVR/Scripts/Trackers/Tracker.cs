@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Tracker : MonoBehaviour
 {
+
+#pragma warning disable 0649
+    [SerializeField] private GameObject activeObject; //The object that appears if this active.
+#pragma warning restore 0649
+
+    #region Unity
     private void Start()
     {
         EditorManager.GetManager()?.TrackerManager.Add(this);
@@ -27,4 +33,11 @@ public class Tracker : MonoBehaviour
         EditorManager.GetManager()?.TrackerManager.Remove(this);
         MainManager  .GetManager()?.TrackerManager.Remove(this);
     }
+    #endregion
+
+    public void SetActive(bool value) => activeObject.SetActive(true);
+    public bool IsActive() => activeObject.activeSelf;
+
+
+
 }

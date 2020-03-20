@@ -15,19 +15,16 @@ public class EditorTrackerManager : TrackerManager
         if (index >= trackers.Count && index != 0)
             throw new System.IndexOutOfRangeException();
 
-        this.mainTrackerIndex = index;
-
-        //if(notifyObservers)
-            NotifyObservers();
+        this.SetTrackerActive(index);
     }
 
     public override void Remove(Tracker tracker)
     {
         int trackerIndex = trackers.IndexOf(tracker);
-        if (mainTrackerIndex >= trackers.Count - 1)
-            mainTrackerIndex = (trackers.Count ==1) ? 0 : trackers.Count - 2;
 
-        
+        if (mainTrackerIndex >= trackers.Count - 1)
+            SetTrackerActive((trackers.Count ==1) ? 0 : trackers.Count - 2);
+                
         base.Remove(tracker);
         NotifyObservers();
     }

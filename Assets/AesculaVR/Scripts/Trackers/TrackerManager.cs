@@ -17,6 +17,14 @@ public class TrackerManager : ObservableObject
 
     protected int mainTrackerIndex = 0;
 
+    protected void SetTrackerActive(int index)
+    {
+        trackers[mainTrackerIndex].SetActive(false);
+        mainTrackerIndex = index;
+        trackers[mainTrackerIndex].SetActive(true);
+        NotifyObservers();
+    }
+
     public TrackerManager()
     {
         trackers     = new List<Tracker>();
@@ -29,6 +37,8 @@ public class TrackerManager : ObservableObject
 
         if (trackersHash.Contains(tracker))
             return;
+
+
 
         trackers    .Add(tracker);
         trackersHash.Add(tracker);
