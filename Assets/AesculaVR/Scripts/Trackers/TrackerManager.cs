@@ -16,8 +16,9 @@ public class TrackerManager : ObservableObject
     public Tracker Main { get { return (trackers.Count > 0) ? trackers[mainTrackerIndex] : null;} }
 
     protected int mainTrackerIndex = 0;
+    public int GetActiveTrackerIndex => mainTrackerIndex;
 
-    protected void SetTrackerActive(int index)
+    public void SetTrackerActive(int index)
     {
         trackers[mainTrackerIndex].SetActive(false);
         mainTrackerIndex = index;

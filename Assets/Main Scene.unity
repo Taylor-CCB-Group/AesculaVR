@@ -628,6 +628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e30007c8c385b4b49959cee156f228fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeObject: {fileID: 0}
 --- !u!1 &47589347
 GameObject:
   m_ObjectHideFlags: 0
@@ -2168,6 +2169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e30007c8c385b4b49959cee156f228fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeObject: {fileID: 0}
 --- !u!114 &222330244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10203,11 +10205,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 951139202}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6643ca2a56c97124581534c9852784d2, type: 3}
+  m_Script: {fileID: 11500000, guid: 81238cd4fe19d3941af5c7c51691dea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggles: []
-  prefab: {fileID: 5611470704679035203, guid: 436c808d9ad174d47be4403675c400a8, type: 3}
+  trackerViewPrefab: {fileID: 7092562222180542718, guid: 4749ffb4b467d53458a80df3f5cb1bd1,
+    type: 3}
   contentRoot: {fileID: 951139203}
 --- !u!1 &959748188
 GameObject:
@@ -12147,7 +12149,7 @@ MonoBehaviour:
   errorDialog: {fileID: 943842566}
   sortByDropdown: {fileID: 1623886909}
   orderByDropdown: {fileID: 995424497}
-  trackersToggle: {fileID: 951139207}
+  trackersView: {fileID: 951139207}
 --- !u!114 &1142778264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17207,6 +17209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e30007c8c385b4b49959cee156f228fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeObject: {fileID: 0}
 --- !u!114 &1626559697
 MonoBehaviour:
   m_ObjectHideFlags: 0

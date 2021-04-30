@@ -7,7 +7,7 @@ public class TrackableObjectView : FileBrowserView
     public FileManager FileManager => mainManager.TrackableObjectManager.FileManager;
 
 #pragma warning disable 0649
-    [SerializeField] private TrackerRadioToggle trackersToggle;
+    [SerializeField] private TrackersView trackersView;
 #pragma warning restore 0649
     private MainManager mainManager;
 
@@ -32,6 +32,6 @@ public class TrackableObjectView : FileBrowserView
     /// <param name="file">The file to load.</param>
     public void Load(IFile file)
     {
-        mainManager.TrackableObjectManager.LoadTrackableObject(file, trackersToggle.Tracker);
+        mainManager.TrackableObjectManager.LoadTrackableObject(file, trackersView.Tracker);
     }
 }

@@ -88,7 +88,9 @@ public class TrackerRadioToggle : RadioToggle, IObserver
     {
         this.toggles = new List<Toggle>();
         int count = GetTrackerManager().TrackersReference.Count;
+        
 
+        
         ///remove all the active toggles
         while (activeToggles.Count > 0)
         {

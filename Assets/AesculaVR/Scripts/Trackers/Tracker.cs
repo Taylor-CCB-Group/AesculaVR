@@ -35,7 +35,7 @@ public class Tracker : MonoBehaviour
     }
     #endregion
 
-    public void SetActive(bool value) => activeObject.SetActive(true);
+    public void SetActive(bool value) => value = value;// activeObject.SetActive(true);
     public bool IsActive() => activeObject.activeSelf;
 
 

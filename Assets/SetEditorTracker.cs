@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(TrackerRadioToggle))]
+//[RequireComponent(typeof(TrackerRadioToggle))]
 public class SetEditorTracker : MonoBehaviour
 {
     private EditorManager editorManager;
 
+    /*
     private void Start()
     {
         editorManager = EditorManager.GetManager();
@@ -19,5 +20,5 @@ public class SetEditorTracker : MonoBehaviour
     {
         editorManager.TrackerManager.SetMainIndex(value);
     }
-
+    */
 }

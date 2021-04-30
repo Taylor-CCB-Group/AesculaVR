@@ -56,8 +56,8 @@ namespace AesculaVR.Manipulations
         {
             base.End();
 
-            Vector3 localRotation = Manipulatable.transform.localRotation.eulerAngles;
             Manipulatable.transform.SetParent(orginalParent);
+            Vector3 localRotation = Manipulatable.transform.localRotation.eulerAngles;
 
             EditorManager.ActionManager.DoAction(new CompoundAction(new IAction[]
             {
