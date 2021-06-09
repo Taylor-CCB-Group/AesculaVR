@@ -1,137 +1,122 @@
-# **What Is AesculaVR?**
+# Aescular 
+
+---
+
+## What Is AesculaVR?
+
 AesculaVR is a piece of VR software designed to track and record positions, distances and rotations using the HTC Vive Trackers.
 
-**Setting Up VR:**
-**Download SteamVR:**
-* [This is written on the 01//04/2020, Things may have changed]*
-Before using Virtual Reality *(VR)*, you’ll need to download SteamVR. To do so, Go to[ https://store.steampowered.com/](https://store.steampowered.com/) and click on “Install Steam”.  *(At the time of writing, it’s a green box at the top right of the page)*.  You should then follow their instructions.
-Once you have created an account and have logged into the steam client, go to the Library Tab, click on “Games” (*On the left side of the screen*) and change it to “Tools”. Go through the List until and find “SteamVR” and install it.
+## The Basics	
 
-## **Download AesculaVR:**
-To set up AesculaVR you’ll need to download the software from GitHub. Once that is done, you’ll need to decompress the files into their own folder. *(It doesn’t matter where)*. Once that is done, you can click on the .exe file to open AesculaVR.
-**Loading in your own Objects:**
-To load in your own objects, You’ll need to go to your documents folder *(After running AesculaVR at least once). *You should see a folder called “AesculaVR”, Open it, then go to “Objects”. You should move your object files into this folder before running AesculaVR.
-Note: AesculaVR only supports the ”.Obj” file type.
+### Editor
 
-(WARN_UNRECOGNIZED_ELEMENT: PAGE_BREAK)
-
-**The Editor:**
 When you open AesculaVR you’ll be dropped into the editor. From you can load in objects and set up your measurements, before saving them to a “Trackable Object”
 
-## **Trackable Objects:**
-Trackable objects are the *things* you’ll load into the recorder. They are a combination of measures and objects. Each trackable object is tied to a single tracker.
+#### Trackable Objects:
 
-## **Measures:**
+Trackable objects are the things you’ll load into the recorder. They are a combination of measures and objects. Each trackable object is tied to a single tracker
+
+#### Measures:
 Measures represent the values you want to record. At the moment there are four types of measures which are Vectors, Points, Planes and Triangular planes.
-| 
-### **Vectors:** | ![](WARN_REPLACE_IMG_URL) | 
-| --- | --- |
-| Vectors represent a line or direction. |  | 
 
-### 
-| 
-### **Points:** | ![](WARN_REPLACE_IMG_URL) | 
-| --- | --- |
-| Points represent a position. |  | 
+* Vectors represent a line or direction.
+* Points represent a position.
+* Planes represent a flat surface. Specifically, a plane represents a Normal to a surface. The difference between a triangular plane and plane is how you create and modify them.
 
-| 
-### **Planes and Triangular Planes.** | ![](WARN_REPLACE_IMG_URL)![](WARN_REPLACE_IMG_URL) | 
-| --- | --- |
-| Planes represent a flat surface. Specifically, a plane represents a Normal to a surface. The difference between a triangular plane and plane is how you create and modify them.
- |  | 
+#### Objects: 
 
-## 
-
-## **Objects:**
 Objects are models you want to see. If you want to see a representation of a Hip, Ship or any other physical object, you can load them in as an object.
 
-## **Tools:**
+#### Tools: 
+
 You can use tools to help you move objects and measurements into the position you want.
-| 
-### **Fine Movement Tool:** |  | 
-| --- | --- |
-| The Fine movement tool can allow you to move measures and objects slower or faster than normal. You can also constrain which Axis you want to move the measures and objects on. |  | 
 
-| 
-### **Smooth Transformation Tool:** |  | 
-| --- | --- |
-| The Fine movement tool can allow you to move measures and objects slower or faster than normal. You can also constrain which Axis you want to move the measures and objects on. |  | 
+* The Fine movement tool can allow you to move measures and objects slower or faster than normal. You can also constrain which Axis you want to move the measures and objects on.
 
-(WARN_UNRECOGNIZED_ELEMENT: PAGE_BREAK)
+* The Smooth tool allows you to move measures and objects smoothly. 
 
-**Trackers:**
-Here you can select which tracker is active. Measures and Objects are created and attached to the active tracker.
+#### Trackers:
 
-## **Moving to the Recorder:**
-To move the recorder mode, Press the button that’s shaped like a stopwatch.
+ Here you can select which tracker is active. Measures and Objects are created and attached to the active tracker.
 
-(WARN_UNRECOGNIZED_ELEMENT: PAGE_BREAK)
+### Recorder
 
-**The Recorder:**
 After you have set up your trackable objects, you’ll want to record some data and the recorder will let you do just that.
 A recording will save out the values for each of your trackable objects.
 
-## **Trackable Objects:**
-Trackable objects are the combinations of measures and objects you created in the editor.
+---
 
-## **Recorder**
-In this tab, you can create new recordings. When recording is saved it’s named after the time it was created.
+## Tutorial
 
-## **Moving to the Editor:**
-To move the Editor, Press the button that’s shaped like a screwdriver and a wench.
+### Purpose
 
-# 
+The purpose of the setup is to get two angles between a femur and an impactor.  To measure the angle between the femur and impactor, we must project them onto a plane.
+The planes need to replicate the Sagittal (longitudinal) and Axial (horizontal) planes. 
 
-(WARN_UNRECOGNIZED_ELEMENT: PAGE_BREAK)
+![Image](https://www.researchgate.net/profile/Masahiko-Nakamoto-2/publication/220876519/figure/fig2/AS:305605077159943@1449873336277/Definition-of-the-femur-coordinate-system-1-Sagittal-view-2-Coronal-view-3-Axial.png)
 
-# **The Recording File Type:**
-Once you have created a recording, You’ll probably want to process the data. The data is stored to a “.recording” file, but under the hood it’s just a Json file. You can even use some text editors to see the raw data itself.
-The recording files are saved to the “AesculaVR/Recordings” folder in your user documents.
-**The JSON Format:**
-| **Type** | **Name** | **Description** | 
-| --- | --- | --- |
-| String [] | indexToPaths | A list of objects that’s being used. | 
-| KeyFrame[] | keyframes | A List of Keyframes. | 
+### Setup
 
-The index to paths stores the name of the trackable object being used. These objects should be in your Trackable objects folder.
-The Key frames are described below.
+Goto Editor Scene.
+Start Aescular from Unity.
+Select Tracker.
 
-### **The Key Frame:**
-Each key frame represents a moment in time.
-| **Type** | **Name** | **Description** | 
-| --- | --- | --- |
-| Number | time | The number of seconds, since the recording started. | 
-| TrackableObject[] | objects | A list of trackable objects in a scene | 
+Select Tracker For the Impactor,
+1. Create a Vector going down the shaft. (So its parallel to the sagittal plane)
+2. Create a Vector going Perpendicular to the Shaft,Upwards.  (So it's parallel to the Axial plane)
 
-### 
-(WARN_UNRECOGNIZED_ELEMENT: PAGE_BREAK)
+Goto the Trackable Objects menu, and save it.
+Clear the Scene by pressing Undo repeatedly.
 
-### **The Trackable Object:**
-A Trackable Object represents the combination of measures and objects that you created in the editor. The index is the position of the trackable object file, in the “index to paths” array mentioned earlier. The position and rotation values are of the tracker that the trackable object is attached to.
-| **Type** | **Name** | **Description** | 
-| --- | --- | --- |
-| Number | index | The index to the object in “indexToPaths” | 
-| Vector3 | position | The position of the object  (x y z). | 
-| Vector3 | rotation | The rotation of the object  (x y z). | 
-| Measure[] | measures | The measures on the object. | 
+Select Tracker For the Femur.
+1. Create a Plane Going down the femur. So the plane lies flat on it.
+2. Create a Plane Perpendicular to the femur, So the Plane’s Normal Faces down the Femur.
+3. Create a Vector going down the femur
+4. Create a Vector going up from the femur, So its Perpendicular to femur, upwards.
 
-**Measures:**
-Measures give the values of the *measures* attached to the trackable object, the type of measure is represented by a number between 0 to 3, but each output a Vector3.
-Planes give you the normal to the surface.
-Vectors give you the distance between two points.
-A Point is just a position.
-| **Type** | **Name** | **Description** | 
-| --- | --- | --- |
-| Number | Type | The type of measure:
-0: Plane
-1: Vector
-2: Point
-3 Triangular Plane | 
-| Vector3 | Value | The value of the measurement | 
 
-## 
-(WARN_UNRECOGNIZED_ELEMENT: PAGE_BREAK)
+Goto the Trackable Objects menu, and save it.
 
-## **Can we see the values in real time?**
-AesculaVR is open source. You can download the project and make changes to it if you want to. Its written in the Unity using C#. You can get Unity for free at Unity.com, and there’s plenty of tutorials out there on how to use it.
-Note: Aescular is was written with Unity version 2019.2.0a8, however it *Should* work the a 2019 LTS *(Long Term Support) *version. You can try it in different versions but there’s no guarantee it’ll work.# AesculaVR
+Goto the Recorder Scene.
+Select the Femur and Load in the Femur Trackable Object.
+Select the Impactor and load in the Impactor Trackable Object.
+
+Goto the Unity Inspector.
+Select “Display values '' in the Hierarchy
+Fill in the Projection Angle View,
+
+#### The Project Angle View.
+
+The Order you created the measures on the trackable objects, and the order you loaded them into the recorder matters.
+
+Direction A and B are the Vectors from the angle. 
+The Projection Plane is the plane on which the angle is measured.
+
+Object index: Which object are we looking at? Depending on the order we loaded the trackable objects.
+
+Measure Index: On the trackable Object, Which measure are we using? Depending on the order we create the measures when making the trackable object.
+
+A Projection plane should look like:
+
+```
+Direction A:
+    Object Index: 0
+    Measure Index: 2
+Direction B:
+    Object Index: 1
+    Measure Index: 0
+Projection Plane:
+    Object Index: 0
+    Measure Index: 0
+```
+Then turn on “Is Updating”.
+You’ll then see your angle updating.
+
+#### Explanation of Why we need to project the Angle.
+
+Suppose we want to take an angle on the Axial Plane; e.g we want to measure how much the “Scientific name here”.  We’ll need two vectors and a plane. An angle is a space between two intersecting lines; These lines are the vectors. If we use the DOT product; we'll have an angle between the two vectors; but it Won't be the angle on the Axial Plane.  To get the angle on the axial plane, we have to Project the vectors to it first; and then measure the angle.
+
+If we rotate the figure below around the Z axis, We can see the XZ angle changes from obtuse to acute; Therefore we know we have to project the Vectors onto a Plane. In this example the plane is the page you are reading.
+
+![Image](https://i.stack.imgur.com/zEYI0.png)
+See how the Angle Between XZ changes.
